@@ -1,9 +1,13 @@
-import {HumanMessage} from '@langchain/core/messages';
-import {createGraph} from './src/graph';
 import 'dotenv/config';
+import {HumanMessage} from '@langchain/core/messages';
+import {createGraph} from './lib/graph';
+import {server} from './server.ts'
+
 
 async function main(props: {model: string; temperature?: number, system_message: string, max_tokens: number, prompt: string}) {
-  // Use the agent
+  // Start The Server
+  server()
+  // Use the agent 
   const graph = await createGraph({
     model: props.model,
     temperature: props.temperature || 0.5,
@@ -21,5 +25,5 @@ main({
   temperature: 0.5,
   system_message:'Welcome to the team! You are a helpful AI assistant, collaborating with other assistants.',
   max_tokens: 250,
-  prompt: 'Who is Dr.Doom?',
+  prompt: 'What is time?',
 });

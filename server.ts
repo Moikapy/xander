@@ -1,31 +1,23 @@
-import express from 'express';
-import 'dotenv/config';
-import {init_routes} from './routes'
+import express from "express";
+import "dotenv/config";
+import { init_routes } from "./routes";
+import bodyParser from "body-parser";
 
-export async function server(){
-  
+export async function server() {
   try {
-      //init express
-      const app = express();
+    //init express
+    const app = express();
 
+    app.use(bodyParser.json());
 
-      // Hello World Route
-      app.get('/',(req,res)=>{
-        res.send("Hello, Are you looking for me?")
-      }) 
+    await init_routes(app);
 
-
-      init_routes(app)
-  
-      // Start server and listen to PORT
-      app.listen(process.env.PORT||3000,()=>{
-        console.log(`Server listening on port: ${process.env.PORT||3000}`);
-      });
-
+    // Start server and listen to PORT
+    app.listen(process.env.PORT || 3000, () => {
+      console.log(`Server listening on port: ${process.env.PORT || 3000}`);
+    });
   } catch (error) {
-    console.log('Error Message:',error.message);
+    console.log("Error Message:", error.message);
     //ADD ERROR LOGGING FOR SERVER
   }
-
 }
-

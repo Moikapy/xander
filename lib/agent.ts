@@ -1,6 +1,9 @@
-import {ChatPromptTemplate, MessagesPlaceholder} from '@langchain/core/prompts';
-import {Runnable} from '@langchain/core/runnables';
-import {ChatAnthropic} from '@langchain/anthropic';
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
+import { Runnable } from "@langchain/core/runnables";
+import { ChatAnthropic } from "@langchain/anthropic";
 /**
  * Create an agent that can run a set of tools.
  */
@@ -11,19 +14,18 @@ export async function createAgent({
   llm: ChatAnthropic;
   systemMessage: string;
 }): Promise<Runnable> {
-
   let prompt = ChatPromptTemplate.fromMessages([
     [
-      'system',
-      'You are a helpful AI assistant, collaborating with other assistants.' +
-        ' Use the provided tools to progress towards answering the question.' +
+      "system",
+      "You are a helpful AI assistant, collaborating with other assistants." +
+        " Use the provided tools to progress towards answering the question." +
         " If you are unable to fully answer, that's OK, another assistant with different tools " +
-        ' will help where you left off. Execute what you can to make progress.' +
-        ' If you or any of the other assistants have the final answer or deliverable,' +
-        ' prefix your response with FINAL ANSWER so the team knows to stop.' +
-        ' \n{system_message}',
+        " will help where you left off. Execute what you can to make progress." +
+        " If you or any of the other assistants have the final answer or deliverable," +
+        " prefix your response with FINAL ANSWER so the team knows to stop." +
+        " \n{system_message}",
     ],
-    new MessagesPlaceholder('messages'),
+    new MessagesPlaceholder("messages"),
   ]);
   prompt = await prompt.partial({
     system_message: systemMessage,

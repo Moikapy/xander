@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": false,
   "scripts": {
-    "start": "npx tsx main.ts"
+    "start": "npx tsx main.ts",
+    "dev": "tsx watch main.ts",
+    "format": "prettier --write \"**/*.(js|ts)\"  \"**/**/*.(js|ts)\""
   },
   "dependencies": {
     "@langchain/anthropic": "^0.3.3",
@@ -12,5 +14,10 @@
     "@langchain/langgraph": "^0.2.9",
     "dotenv": "^16.4.5",
     "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.1"
   }
 }

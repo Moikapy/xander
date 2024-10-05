@@ -1,9 +1,9 @@
 // ./src/createNode.ts
 
-import {HumanMessage} from '@langchain/core/messages';
-import type {RunnableConfig} from '@langchain/core/runnables';
-import { AgentState } from './state';
-import {Runnable} from '@langchain/core/runnables';
+import { HumanMessage } from "@langchain/core/messages";
+import type { RunnableConfig } from "@langchain/core/runnables";
+import { AgentState } from "./state";
+import { Runnable } from "@langchain/core/runnables";
 // Helper function to run a node for a given agent
 export async function createNode(props: {
   state: typeof AgentState.State;
@@ -11,14 +11,14 @@ export async function createNode(props: {
   name: string;
   config?: RunnableConfig;
 }) {
-  const {state, agent, name, config} = props;
+  const { state, agent, name, config } = props;
   let result = await agent.invoke(state, config);
   // We convert the agent output into a format that is suitable
   // to append to the global state
   if (!result?.tool_calls || result.tool_calls.length === 0) {
     // If the agent is NOT calling a tool, we want it to
     // look like a human message.
-    result = new HumanMessage({...result, name: name});
+    result = new HumanMessage({ ...result, name: name });
   }
   return {
     messages: [result],

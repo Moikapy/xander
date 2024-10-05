@@ -1,10 +1,10 @@
 //./src/llm.ts
-import {ChatAnthropic} from '@langchain/anthropic';
+import { ChatAnthropic } from "@langchain/anthropic";
 
 export async function llm({
   model,
   temperature,
-  max_tokens
+  max_tokens,
 }: {
   model: string;
   temperature: number;
@@ -13,6 +13,6 @@ export async function llm({
   return new ChatAnthropic({
     model,
     temperature,
-    maxTokens:max_tokens,
+    maxTokens: max_tokens,
   });
 }

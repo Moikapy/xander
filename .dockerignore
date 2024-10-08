@@ -1,0 +1,7 @@
+ui
+# Ignore node_modules directory
+node_modules
+
+# Optionally, you can add other files or directories you want to ignore
+ .gitignore
+*.log

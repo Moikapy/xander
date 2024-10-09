@@ -1,11 +1,14 @@
 import { createGraph } from "../lib/graph.ts";
 import { HumanMessage } from "@langchain/core/messages";
 export async function chat(app) {
+
   return await app.post("/api/v1/chat", async (req, res) => {
+
     // Destructure req.body
+	console.log(req.body)
     const { model, temperature, system_message, max_tokens, prompt } =
       await req.body;
-
+    console.log("req.body",req.body)
     // Create Agent Graph
     const graph = await createGraph({
       model: model,

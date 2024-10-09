@@ -8,7 +8,9 @@
     "start:safe": "docker compose up --build",
     "dev": "nodemon --exec npx tsx main.ts",
     "dev:safe": "docker compose -f docker-compose-dev.yml up --build",
-    "format": "prettier --write \"**/*.(js|ts)\"  \"**/**/*.(js|ts)\""
+    "format": "prettier --write \"**/*.(js|ts)\"  \"**/**/*.(js|ts)\"",
+    "db:start": "npx supabase start",
+    "db:stop": "npx supabase stop"
   },
   "dependencies": {
     "@langchain/anthropic": "^0.3.3",
@@ -16,7 +18,9 @@
     "@langchain/core": "^0.3.4",
     "@langchain/langgraph": "^0.2.9",
     "dotenv": "^16.4.5",
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "http-proxy-middleware": "^3.0.3",
+    "lucide-react": "^0.451.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.7",

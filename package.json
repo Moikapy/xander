@@ -6,27 +6,31 @@
   "scripts": {
     "start": "bun main.ts",
     "start:safe": "docker compose up --build",
-    "dev": "nodemon --exec bun main.ts",
+    "dev": "bun --watch main.ts",
     "dev:safe": "docker compose -f docker-compose-dev.yml up --build",
     "format": "prettier --write \"**/*.(js|ts)\"  \"**/**/*.(js|ts)\"",
     "db:start": "bun supabase start",
     "db:stop": "bun supabase stop"
   },
   "dependencies": {
+    "@elysiajs/cors": "^1.1.1",
+    "@elysiajs/opentelemetry": "^1.1.6",
+    "@elysiajs/swagger": "^1.1.5",
     "@langchain/anthropic": "^0.3.3",
     "@langchain/community": "^0.3.3",
     "@langchain/core": "^0.3.4",
     "@langchain/langgraph": "^0.2.9",
     "dotenv": "^16.4.5",
     "elysia": "^1.1.20",
-    "express": "^4.21.0",
-    "http-proxy-middleware": "^3.0.3",
+
+
     "lucide-react": "^0.451.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7",
+    "@types/bun": "^1.1.11",
+
     "prettier": "^3.3.3",
     "supabase": "^1.204.3",
-    "tsx": "^4.19.1"
+   
   }
 }

@@ -6,7 +6,29 @@ services:
       context: .
       dockerfile: Dockerfile-dev
     ports:
-      - "3001:3000"
+      - "3001:3001"
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules  # This line tells Docker not to override with host's empty node_modules
+      - /usr/src/app/node_modules
+      - /usr/src/app/ui
+      - /usr/src/app/supabase    
+    environment:
+      - API_URL=http://api:3001/api/v1/chat
+    networks:
+      - supabase
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile-dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./ui/:/ui/
+      - /usr/src/app/node_modules
+    networks:
+      - supabase
+
+networks:
+  supabase:
+    name: supabase_network_xander
+    external: true

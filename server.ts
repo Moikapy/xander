@@ -16,8 +16,8 @@ export async function server() {
     await init_routes(app);
 
     // Start server and listen to PORT
-    app.listen(process.env.PORT || 3000, () => {
-      console.log(`Online at: http://localhost:${process.env.PORT || 3000}`);
+    app.listen(process.env.PORT || 3001, () => {
+      console.log(`Online at: http://localhost:${process.env.PORT || 3001}`);
     });
   } catch (error) {
     console.log("Error Message:", error.message);

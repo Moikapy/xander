@@ -1,12 +1,10 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
 const withMT = require("@material-tailwind/react/utils/withMT");
 
-
 /** @type {import('tailwindcss').Config} */
-module.exports = withMT( {
+module.exports = withMT({
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx,js,jsx}",'./public/index.html',    "./node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",],
+  content: ["./src/**/*.{ts,tsx,js,jsx}", "./public/index.html"],
   theme: {
     container: {
       center: true,
@@ -58,8 +56,7 @@ module.exports = withMT( {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
-        mono: ['ui-monospace', 'SFMono-Regular'],
-
+        mono: ["ui-monospace", "SFMono-Regular"],
       },
       keyframes: {
         "accordion-down": {
@@ -77,5 +74,5 @@ module.exports = withMT( {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("daisyui")],
 });

@@ -1810,9 +1810,10 @@ var require_react_development = __commonJS((exports, module) => {
 
 // node_modules/react/index.js
 var require_react = __commonJS((exports, module) => {
+  var react_development = __toESM(require_react_development(), 1);
   if (false) {
   } else {
-    module.exports = require_react_development();
+    module.exports = react_development;
   }
 });
 
@@ -2264,9 +2265,10 @@ var require_scheduler_development = __commonJS((exports) => {
 
 // node_modules/scheduler/index.js
 var require_scheduler = __commonJS((exports, module) => {
+  var scheduler_development = __toESM(require_scheduler_development(), 1);
   if (false) {
   } else {
-    module.exports = require_scheduler_development();
+    module.exports = scheduler_development;
   }
 });
 
@@ -22619,9 +22621,10 @@ var require_react_dom_development = __commonJS((exports) => {
 
 // node_modules/react-dom/index.js
 var require_react_dom = __commonJS((exports, module) => {
+  var react_dom_development = __toESM(require_react_dom_development(), 1);
   if (false) {
   } else {
-    module.exports = require_react_dom_development();
+    module.exports = react_dom_development;
   }
 });
 
@@ -22652,10 +22655,10 @@ var require_client = __commonJS((exports) => {
 });
 
 // src/index.tsx
-var import_react3 = __toESM(require_react(), 1);
+var import_react5 = __toESM(require_react(), 1);
 var import_client = __toESM(require_client(), 1);
 // src/App.tsx
-var import_react2 = __toESM(require_react(), 1);
+var import_react4 = __toESM(require_react(), 1);
 
 // node_modules/react-router-dom/dist/index.js
 var React2 = __toESM(require_react(), 1);
@@ -24747,7 +24750,7 @@ var q = y(h());
 
 // src/routeLoader.ts
 var import_react = __toESM(require_react(), 1);
-var __dirname = "F:\\xander\\src";
+var __dirname = "/Users/moikapy/Documents/GitHub/xander/src";
 var isServer = typeof window === "undefined";
 var getRoutePath = (filePath) => {
   const relativePath = q.relative(q.resolve(__dirname, "pages"), filePath);
@@ -24787,21 +24790,77 @@ var generateRoutes = (dir = q.resolve(__dirname, "pages")) => {
   return routes;
 };
 
+// src/components/Layout.tsx
+var import_react3 = __toESM(require_react(), 1);
+
+// src/components/Navbar.tsx
+var import_react2 = __toESM(require_react(), 1);
+var Navbar = () => {
+  return /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "navbar bg-base"
+  }, /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "flex-none"
+  }, /* @__PURE__ */ import_react2.default.createElement("button", {
+    className: "btn btn-square btn-ghost"
+  }, /* @__PURE__ */ import_react2.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    className: "inline-block h-5 w-5 stroke-current"
+  }, /* @__PURE__ */ import_react2.default.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: "2",
+    d: "M4 6h16M4 12h16M4 18h16"
+  })))), /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "flex-1"
+  }, /* @__PURE__ */ import_react2.default.createElement(Link, {
+    to: "/",
+    className: "btn btn-ghost text-xl"
+  }, "Moikas")), /* @__PURE__ */ import_react2.default.createElement("div", {
+    className: "flex-none"
+  }, /* @__PURE__ */ import_react2.default.createElement("button", {
+    className: "btn btn-square btn-ghost"
+  }, /* @__PURE__ */ import_react2.default.createElement("svg", {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    className: "inline-block h-5 w-5 stroke-current"
+  }, /* @__PURE__ */ import_react2.default.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: "2",
+    d: "M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+  })))));
+};
+var Navbar_default = Navbar;
+
+// src/components/Layout.tsx
+function Layout({ children }) {
+  return /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: "layout h-full flex flex-col justify-between font-mono"
+  }, /* @__PURE__ */ import_react3.default.createElement(Navbar_default, null), children, /* @__PURE__ */ import_react3.default.createElement("footer", {
+    className: "w-full flex justify-center py-6 text-sm"
+  }, /* @__PURE__ */ import_react3.default.createElement("div", {
+    className: "max-w-7xl flex justify-between items-center"
+  }, /* @__PURE__ */ import_react3.default.createElement("p", null, "\xA9 ", new Date().getFullYear(), " Moikas LLC. All Rights Reserved."), " ", /* @__PURE__ */ import_react3.default.createElement("p", null, "v", Bun.env.npm_package_version))));
+}
+
 // src/App.tsx
 var routes = generateRoutes();
-var App = () => /* @__PURE__ */ import_react2.default.createElement(import_react2.Suspense, {
-  fallback: /* @__PURE__ */ import_react2.default.createElement("div", null, "Loading...")
-}, /* @__PURE__ */ import_react2.default.createElement("head", null, /* @__PURE__ */ import_react2.default.createElement("title", null, "Moikas"), /* @__PURE__ */ import_react2.default.createElement("style", {
+var App = () => /* @__PURE__ */ import_react4.default.createElement(import_react4.Suspense, {
+  fallback: /* @__PURE__ */ import_react4.default.createElement("div", null, "Loading...")
+}, /* @__PURE__ */ import_react4.default.createElement("head", null, /* @__PURE__ */ import_react4.default.createElement("title", null, "Moikas"), /* @__PURE__ */ import_react4.default.createElement("style", {
   jsx: true
 }, `
     html,body,#root{
       height:100%
-    }`)), /* @__PURE__ */ import_react2.default.createElement(Routes, null, routes.map((route) => /* @__PURE__ */ import_react2.default.createElement(Route, {
+    }`)), /* @__PURE__ */ import_react4.default.createElement(Layout, null, /* @__PURE__ */ import_react4.default.createElement(Routes, null, routes.map((route) => /* @__PURE__ */ import_react4.default.createElement(Route, {
   key: route.path,
   path: route.path,
-  element: /* @__PURE__ */ import_react2.default.createElement(route.component, null)
-}))));
+  element: /* @__PURE__ */ import_react4.default.createElement(route.component, null)
+})))));
 var App_default = App;
 
 // src/index.tsx
-import_client.hydrateRoot(document, /* @__PURE__ */ import_react3.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react3.default.createElement(ThemeProvider, null, /* @__PURE__ */ import_react3.default.createElement(App_default, null))));
+import_client.hydrateRoot(document, /* @__PURE__ */ import_react5.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react5.default.createElement(ThemeProvider, null, /* @__PURE__ */ import_react5.default.createElement(App_default, null))));

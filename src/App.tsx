@@ -2,7 +2,7 @@
 import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { generateRoutes } from './routeLoader';
-
+import {Layout}from './components/Layout.tsx'
 
 //import {Navigation} from './components/Navbar.tsx'
 const routes = generateRoutes();
@@ -19,6 +19,7 @@ const App = () => (
     }`}
     </style>
   </head>
+   <Layout>
     <Routes>
       {routes.map((route) => (
         <Route
@@ -28,6 +29,7 @@ const App = () => (
         />
       ))}
     </Routes>
+    </Layout>
   </Suspense>
 );
 

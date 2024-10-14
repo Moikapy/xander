@@ -135,7 +135,7 @@ const app = new Elysia()
   
 
   .get('/index.js', () => Bun.file('public/index.js'))
-
+  .get("/favicon.ico",()=>Bun.file('public/favicon.ico'))
   .group("/api/v1", (app) =>
     app.decorate("body", new ChatInput()).post(
       "/chat",

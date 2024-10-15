@@ -12,7 +12,7 @@ const Home = () => {
         </p>
         
         <div className="flex flex-col space-y-4">
-          <Link to="/studio" className="btn btn-wide text-white">Enter</Link>
+          <Link to="/studio" className="btn btn-wide bg-black text-white">Enter</Link>
         </div>
      </div>
     </section>

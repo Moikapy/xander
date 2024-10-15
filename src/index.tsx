@@ -8,7 +8,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
  
 hydrateRoot(
-  document,
+ document.getElementById('root'),
   <BrowserRouter>
 <ThemeProvider>
     <App />

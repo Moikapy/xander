@@ -1,12 +1,22 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react';
-import {api} from '../lib/api.ts'
+
+import useInvoke from '../hooks/useInvoke'
+
+
+
+
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
-
+  const{invoke_graph} = useInvoke({
+        model:"claude-3-haiku-20240307",
+        max_tokens:150,
+        system_message:'You are the customer representive of moikas.com',
+        temperature:0.3,
+      })
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -15,28 +25,16 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async () => {
-     console.log('input',input)
 
+  const sendMessage = async () => {
     if (input.trim() === '') return;
     const userMessage = { role: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
      setInput('');
     setIsLoading(true);
-
+    console.log(typeof invoke_graph)
     try {
-      const {data,error} = await api.chat.post({model: "claude-3-haiku-20240307", // You can change this to your preferred model
-          max_tokens: 150,
-          system_message: "You are a helpful AI assistant.",
-          temperature: 0.7,
-          prompt: input
-        });
-      
-      if (error) {
-        throw new Error('Network response was not ok',error);
-      }
-          
-     
+      const {data,error} = await invoke_graph(input)     
       const aiMessage = { role: 'assistant', content: data.message };
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
@@ -65,16 +63,12 @@ const Chat = () => {
       </div>
       <div className="p-4 bg-gray-100">
         <div className="flex w-full">
-        
-
           <input
             type="text"
             placeholder="Type your message..."
             className="flex-1 p-2 mr-2 bg-white border-2 border-black text-black placeholder-gray-500"
            value={input} 
             onInput={(e) => {
-
-                console.log('text',e.target.value);
                 setInput(e.target.value)
               }
             }
@@ -83,7 +77,6 @@ const Chat = () => {
           <button
             className={`px-4 py-2 bg-black text-white border-2 border-black ${isLoading ? 'opacity-50' : 'hover:bg-white hover:text-black'}`}
             onClick={(e)=>{
-              console.log('clicked')
               sendMessage(e)
               }
             }

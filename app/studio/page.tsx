@@ -1,11 +1,15 @@
-
+import { ReactFlow, Background, Controls } from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import Chat from '../components/Chat.tsx'
 
 function Studio({...props}) {
 
   return(
-    <div className="mx-auto w-full h-screen">
-        <Chat/>
+    <div style={{ height: '100%' }}>
+      <ReactFlow>
+        <Background />
+        <Controls />
+      </ReactFlow>
     </div>
   )
 }

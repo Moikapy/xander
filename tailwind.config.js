@@ -4,7 +4,7 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 /** @type {import('tailwindcss').Config} */
 module.exports = withMT({
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx,js,jsx}", "./public/index.html"],
+  content: ["./app/**/*.{ts,tsx,js,jsx}"],
   theme: {
     container: {
       center: true,

@@ -1,8 +1,9 @@
 import React,{Fragment} from 'react'
 import Navbar from './Navbar'
-
-export function Layout({children}){
-  return(
+import '../styles/globals.css'
+export default function Layout({children}){
+  return(<html>
+         <body>
     <div className="layout h-full flex flex-col justify-between font-mono">
       <Navbar/>
       {children}
@@ -11,10 +12,12 @@ export function Layout({children}){
         <div className="max-w-7xl flex justify-between items-center">
         
           <p>&copy; {new Date().getFullYear()} Moikas LLC. All Rights Reserved.</p> <p>
-          v{Bun.env.npm_package_version}
+          v{process.env.npm_package_version}
         </p>
         </div>
       </footer> 
     </div>
+    </body>
+    </html>
   )
 }

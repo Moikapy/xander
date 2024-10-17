@@ -5,3 +5,5 @@ node_modules/
 
 *storybook.log
 public/index.js
+
+.next/

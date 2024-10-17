@@ -1,6 +1,7 @@
+'use client'
 import React from 'react';
-import Home from '../views/home.tsx'
-import {Layout} from '../components/Layout.tsx'
+import Home from '../src/views/home.tsx'
+
 const HomePage = () => {
   return (
      <Home/> 

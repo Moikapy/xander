@@ -1,6 +1,6 @@
 
 import React from 'react'
-import { Link } from 'react-router-dom';
+import Link from 'next/Link'
 const Navbar = () => {
   return (
 <div className="navbar bg-base">
@@ -20,7 +20,7 @@ const Navbar = () => {
     </button>
   </div>
   <div className="flex-1">
-    <Link to="/" className="btn btn-ghost text-xl">Moikas</Link>
+    <Link href="/" className="btn btn-ghost text-xl">Moikas</Link>
   </div>
   <div className="flex-none">
     <button className="btn btn-square btn-ghost">

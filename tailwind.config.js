@@ -14,6 +14,10 @@ module.exports = withMT({
       },
     },
     extend: {
+      inset: {
+        "5rem": " 5rem",
+        "20rem": "20rem",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -1,6 +1,7 @@
-import {useState, useEffect, useRef} from 'react';
+
+import { useState, useEffect, useRef } from 'react';
 import useInvoke from '../hooks/useInvoke';
-import MessageContent from './MessageContent'
+import MessageContent from './MessageContent';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,10 +10,12 @@ const ChatWidget = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(320); // Initial width
   const [height, setHeight] = useState(480); // Initial height
+  const [originalSize, setOriginalSize] = useState({ width: 320, height: 480 });
   const isResizing = useRef(false);
   const messagesEndRef = useRef(null);
+  const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
 
-  const {invoke_graph} = useInvoke({
+  const { invoke_graph } = useInvoke({
     model: 'claude-3-haiku-20240307',
     max_tokens: 4096,
     system_message: 'You are the customer representative of moikas.com',
@@ -20,7 +23,7 @@ const ChatWidget = () => {
   });
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -33,19 +36,19 @@ const ChatWidget = () => {
 
   const sendMessage = async () => {
     if (input.trim() === '') return;
-    const userMessage = {role: 'user', content: input};
+    const userMessage = { role: 'user', content: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
     try {
-      const {data, error} = await invoke_graph(input);
-      const aiMessage = {role: 'assistant', content: data.message};
+      const { data, error } = await invoke_graph(input);
+      const aiMessage = { role: 'assistant', content: data.message };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error('Error sending message:', error.message);
       setMessages((prev) => [
         ...prev,
-        {role: 'system', content: 'Error: Unable to get response'},
+        { role: 'system', content: 'Error: Unable to get response' },
       ]);
     } finally {
       setIsLoading(false);
@@ -55,8 +58,12 @@ const ChatWidget = () => {
   // Resize event handlers
   const handleMouseMove = (e) => {
     if (!isResizing.current) return;
-    setWidth((prevWidth) => Math.max(200, prevWidth + -e.movementX)); // Minimum width: 200px
-    setHeight((prevHeight) => Math.max(300, prevHeight + -e.movementY)); // Minimum height: 300px
+    setWidth((prevWidth) =>
+      Math.max(200, Math.min(window.innerWidth - 20, prevWidth + -e.movementX))
+    ); // Minimum width: 200px
+    setHeight((prevHeight) =>
+      Math.max(300, Math.min(window.innerHeight - 20, prevHeight + -e.movementY))
+    ); // Minimum height: 300px
   };
 
   const handleMouseUp = () => {
@@ -70,6 +77,26 @@ const ChatWidget = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
   };
+
+  // Maximize and Reset size handlers
+  const maximizeSize = () => {
+    setWidth(window.innerWidth - 40);
+    setHeight(window.innerHeight - 80);
+  };
+
+  const resetSize = () => {
+    setWidth(originalSize.width);
+    setHeight(originalSize.height);
+  };
+
+  // Detecting "/" character in input
+  useEffect(() => {
+    if (input === '/') {
+      setShowExtraFeatures(true);
+    } else {
+      setShowExtraFeatures(false);
+    }
+  }, [input]);
 
   return (
     <div className='fixed bottom-4 right-4 z-50'>
@@ -99,11 +126,19 @@ const ChatWidget = () => {
           {/* Header */}
           <div className='flex items-center justify-between bg-black p-3 rounded-t-lg text-white'>
             <h2 className={'ml-4'}>agent_xander.exe</h2>
-            <button
-              onClick={() => setIsOpen(false)}
-              className='text-red-600 focus:outline-none'>
-              ✖️
-            </button>
+            <div className='flex space-x-2'>
+              <button onClick={maximizeSize} className='text-green-600 focus:outline-none'>
+                ⬜️
+              </button>
+              <button onClick={resetSize} className='text-yellow-600 focus:outline-none'>
+                🔄
+              </button>
+              <button
+                onClick={() => setIsOpen(false)}
+                className='text-red-600 focus:outline-none'>
+                ✖️
+              </button>
+            </div>
           </div>
 
           {/* Chat Content */}
@@ -133,7 +168,7 @@ const ChatWidget = () => {
                 value={input}
                 placeholder='Type your message...'
                 className='input input-bordered w-full text-black bg-white border-black placeholder-gray-500'
-                style={{fontFamily: 'monospace'}}
+                style={{ fontFamily: 'monospace' }}
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
                     sendMessage();
@@ -155,11 +190,20 @@ const ChatWidget = () => {
           <div
             className='absolute top-1 left-0 cursor-nw-resize p-2'
             onMouseDown={handleMouseDown}
-            style={{color: 'black'}}>
+            style={{ color: 'black' }}>
             ↖️
           </div>
+      {/* Extra Features Popup */}
+      {showExtraFeatures && (
+        <div className="absolute bottom-[5rem] left-2 z-50 bg-white border border-black p-4 rounded-lg shadow-lg">
+          <h3>coming soon...</h3>
+          {/* Add extra feature components here */}
         </div>
       )}
+        </div>
+      )}
+
+
     </div>
   );
 };

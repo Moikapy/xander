@@ -1,11 +1,22 @@
-
+'use client'
 import React, { useState, useEffect, useRef } from 'react';
+
+import useInvoke from '../hooks/useInvoke'
+
+
+
+
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
-
+  const{invoke_graph} = useInvoke({
+        model:"claude-3-haiku-20240307",
+        max_tokens:150,
+        system_message:'You are the customer representive of moikas.com',
+        temperature:0.3,
+      })
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -14,33 +25,16 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
-  const sendMessage = async () => {
 
+  const sendMessage = async () => {
     if (input.trim() === '') return;
-     console.log(input)
     const userMessage = { role: 'user', content: input };
     setMessages(prev => [...prev, userMessage]);
      setInput('');
     setIsLoading(true);
-
+    console.log(typeof invoke_graph)
     try {
-      const response = await fetch('http://localhost:3001/api/chat', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({model: "claude-3-haiku-20240307", // You can change this to your preferred model
-          max_tokens: 150,
-          system_message: "You are a helpful AI assistant.",
-          temperature: 0.7,
-          prompt: input
-        }),
-      });
-      
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok',response.status);
-      }
-          
-      const data = await response.json();
+      const {data,error} = await invoke_graph(input)     
       const aiMessage = { role: 'assistant', content: data.message };
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
@@ -69,23 +63,23 @@ const Chat = () => {
       </div>
       <div className="p-4 bg-gray-100">
         <div className="flex w-full">
-        
-
           <input
             type="text"
             placeholder="Type your message..."
             className="flex-1 p-2 mr-2 bg-white border-2 border-black text-black placeholder-gray-500"
-            value={input}
-            onChange={(e) => {
-              console.log('text',e.target.value);
-
-              setInput(e.target.value)}}
-            onKeyPress={(e) => {e.preventDefault();
-e.key === 'Enter' && sendMessage()}}
+           value={input} 
+            onInput={(e) => {
+                setInput(e.target.value)
+              }
+            }
+           
           />
           <button
-                     className={`px-4 py-2 bg-black text-white border-2 border-black ${isLoading ? 'opacity-50' : 'hover:bg-white hover:text-black'}`}
-            onClick={(e)=>{e.preventDefault();sendMessage(e)}}
+            className={`px-4 py-2 bg-black text-white border-2 border-black ${isLoading ? 'opacity-50' : 'hover:bg-white hover:text-black'}`}
+            onClick={(e)=>{
+              sendMessage(e)
+              }
+            }
             disabled={isLoading}
           >
             {isLoading ? '...' : 'Send'}

@@ -1,9 +1,11 @@
 import React,{Fragment} from 'react'
 import Navbar from './Navbar'
+import { AxiomWebVitals } from 'next-axiom';
 import '../styles/globals.css'
 export default function Layout({children}){
   return(<html>
          <body>
+      <AxiomWebVitals />
     <div className="layout h-full flex flex-col justify-between font-mono">
       <Navbar/>
       {children}

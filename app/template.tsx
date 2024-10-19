@@ -4,7 +4,8 @@ import Navbar from './components/Navbar'
 import ChatWidget from './components/ChatWidget'
 import './styles/globals.css'
 export default function Layout({children}){
-  return(    <div className="layout h-screen flex flex-col justify-between font-mono">
+  return(   
+    <div className="layout h-screen flex flex-col justify-between font-mono">
       <Navbar/>
       {children}
       {/* Footer */}

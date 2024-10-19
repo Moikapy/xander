@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
+import { Logger } from 'next-axiom';
 //API Routes
 import { chat } from "../../../routes/chat.ts";
 
@@ -34,7 +35,12 @@ const studio_routes = new Elysia()
   .decorate("body", new ChatInput())
   .post(
     "/chat",
-    ({ body }) => chat(body),
+    async({ body,...req }) => {
+      const log = new Logger();
+      log.info('Model used: ', { model_name: body.model });
+      
+      //await log.flush()
+      return chat(body)},
     {
       body: t.Object({
         prompt: t.String({

@@ -7,7 +7,7 @@ import { jwt } from "@elysiajs/jwt";
 import { opentelemetry } from "@elysiajs/opentelemetry";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
-
+import { withAxiom, AxiomRequest } from 'next-axiom';
 // Routes
 import studio_routes from "./studio/index.ts";
 
@@ -38,13 +38,14 @@ const app = new Elysia({ prefix: "/api" })
   )
   .use(cors(corsConfig))
   .use(swagger(swaggerConfig))
+
   .use(studio_routes);
 
 // Expose methods
-export const GET = app.handle;
-export const POST = app.handle;
-export const PATCH = app.handle;
-export const DELETE = app.handle;
-export const PUT = app.handle;
+export const GET = withAxiom(app.handle);
+export const POST = withAxiom(app.handle);
+export const PATCH = withAxiom(app.handle);
+export const DELETE = withAxiom(app.handle);
+export const PUT = withAxiom(app.handle);
 
 export type API = typeof app;

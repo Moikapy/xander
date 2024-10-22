@@ -1,5 +1,0 @@
-[bun.watch]
-poll = true
-entry = "src/index.tsx"
-dist = "dist"
-plugins = ["./bun.plugins.ts"]

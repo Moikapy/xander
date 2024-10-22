@@ -1,34 +1,25 @@
-version: '3.8'
 
+version: "3.8"
 services:
-  api:
+  app:
     build:
       context: .
-      dockerfile: Dockerfile-dev
-    ports:
-      - "3001:3000"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-      - /usr/src/app/ui
-      - /usr/src/app/supabase    
-    environment:
-      - API_URL=http://api:3001/api/v1/chat
-    networks:
-      - supabase
-  ui:
-    build:
-      context: ./ui
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile_dev
     ports:
       - "3000:3000"
+    depends_on:
+      - mongo
     volumes:
-      - ./ui/:/ui/
-      - /usr/src/app/node_modules
-    networks:
-      - supabase
+      - .:/app
+      - /app/node_modules
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: studio_moika_dev
+    volumes:
+      - ./mongo_data:/data/db
 
-networks:
-  supabase:
-    name: supabase_network_xander
-    external: true
+volumes:
+  mongo_data:

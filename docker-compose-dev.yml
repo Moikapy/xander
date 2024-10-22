@@ -20,6 +20,15 @@ services:
       MONGO_INITDB_DATABASE: studio_moika_dev
     volumes:
       - ./mongo_data:/data/db
-
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile_dev
+    container_name: nginx
+    working_dir: /nginx
+    depends_on:
+      - app
+    ports:
+      - "80:80"
 volumes:
   mongo_data:

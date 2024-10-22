@@ -7,3 +7,5 @@ node_modules/
 public/index.js
 
 .next/
+
+mongo_data/

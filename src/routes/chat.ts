@@ -1,4 +1,4 @@
-import { createGraph } from "../lib/graph.ts";
+import { createGraph } from "@/src/lib/graph.ts";
 import { HumanMessage } from "@langchain/core/messages";
 export async function chat(body) {
   // Destructure req.body

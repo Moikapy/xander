@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { api } from "../lib/api.ts";
+import { api } from "@/src/lib/api.ts";
 
 // Invoke LLM
 function useInvoke({ model, max_tokens, system_message, temperature }) {

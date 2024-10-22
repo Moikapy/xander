@@ -1,9 +1,9 @@
 'use client'
 import React,{Fragment} from 'react'
-import Navbar from './components/Navbar'
-import ChatWidget from './components/ChatWidget'
-import './styles/globals.css'
-export default function Layout({children}){
+import Navbar from '@/src/components/Navbar'
+import ChatWidget from '@/src/components/ChatWidget';
+//import '@/src/styles/globals.css';
+export default function Layout({children}:{children:React.ReactNode}) {
   return(   
     <div className="layout h-screen flex flex-col justify-between font-mono">
       <Navbar/>

@@ -1,4 +1,5 @@
-import React,{Fragment} from 'react'
+import React,{Fragment} from 'react';
+import'./global.css';
 export default function RootLayout({
   children,
 }: {

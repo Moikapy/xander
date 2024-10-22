@@ -3,7 +3,7 @@
 FROM oven/bun:slim
 
 # Step 2: Set the working directory inside the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Step 3: Copy the package.json and package-lock.json (if available) to the working directory
 COPY package*.json ./
@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 3000
 
 # Step 7: Define the command to run your app
-CMD ["bun" ,"dev"]
+CMD ["bun", "--bun" ,"dev"]

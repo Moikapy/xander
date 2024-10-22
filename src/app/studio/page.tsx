@@ -4,7 +4,7 @@ import { ReactFlow, Background, Controls, MiniMap,  addEdge,
   applyEdgeChanges,
   applyNodeChanges,  } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import SimpleChatNode from '../components/nodes/SimpleChatNode.tsx'
+import SimpleChatNode from '@/src/components/nodes/SimpleChatNode.tsx';
 
 
 const initialNodes = [

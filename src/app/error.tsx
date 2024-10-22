@@ -1,7 +1,7 @@
 
 "use client";
 
-import Navbar from "./components/Navbar";
+import Navbar from '@/src/components/Navbar';
 import { useLogger } from "next-axiom";
 import { usePathname } from "next/navigation";
 enum LogLevel {
@@ -41,7 +41,19 @@ export default function ErrorPage({
       Ops! An Error has occurred:{" "}
       <p className="text-red-400 px-8 py-2 text-lg">`{error.message}`</p>
       <div className="w-1/3 mt-8">
-        <Navbar />
+        <h2 className="text-lg font-bold">Error Details</h2>
+        <p>
+          <strong>Error Name:</strong> {error.name}
+        </p>
+        <p>
+          <strong>Error Cause:</strong> {error.cause}
+        </p>
+        <p>
+          <strong>Error Stack:</strong> {error.stack}
+        </p>
+        <p>
+          <strong>Error Digest:</strong> {error.digest}
+        </p>
       </div>
     </div>
   );

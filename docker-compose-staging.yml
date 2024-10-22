@@ -1,0 +1,35 @@
+
+version: "3.8"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile_staging
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+      - /app/node_modules
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: studio_moika_dev
+    volumes:
+      - ./mongo_data:/data/db
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile_staging
+      
+    container_name: nginx
+    working_dir: /nginx
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+volumes:
+  mongo_data:

@@ -4,14 +4,14 @@ import useInvoke from '../hooks/useInvoke';
 import MessageContent from './MessageContent';
 
 const ChatWidget = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [width, setWidth] = useState(320); // Initial width
-  const [height, setHeight] = useState(480); // Initial height
-  const [originalSize, setOriginalSize] = useState({ width: 320, height: 480 });
-  const isResizing = useRef(false);
+  const [width] = useState(320); // Initial width
+  const [height] = useState(480); // Initial height
+  //const [originalSize, setOriginalSize] = useState({ width: 320, height: 480 });
+  //const isResizing = useRef(false);
   const messagesEndRef = useRef(null);
-  const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
+ // const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
 
   const { invoke_graph } = useInvoke({
     model: 'claude-3-haiku-20240307',
@@ -19,11 +19,11 @@ const ChatWidget = () => {
     system_message: 'You are the customer representative of moikas.com',
     temperature: 0.3,
   });
-
+/*
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+*/
   useEffect(() => {
     console.log('loaded')
     //scrollToBottom();
@@ -33,7 +33,7 @@ const ChatWidget = () => {
 
   const sendMessage = async ({input,onGeneratingResponse}:{
     input:string,
-    onGeneratingResponse:Function
+    onGeneratingResponse:Function //
   }) => {
     if (input.trim() === '') return;
     const userMessage = { role: 'user', content: input };
@@ -43,11 +43,11 @@ const ChatWidget = () => {
     }
     setIsLoading(true);
     try {
-      const { data, error } = await invoke_graph(input);
-      const aiMessage = { role: 'assistant', content: data.message };
+      const { data } = await invoke_graph(input);
+      const aiMessage = { role: 'assistant', content: data?.message };
       setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
-      console.error('Error sending message:', error.message);
+    } catch (error:any) {
+      console.error('Error sending message:', error?.message);
       setMessages((prev) => [
         ...prev,
         { role: 'system', content: 'Error: Unable to get response' },
@@ -85,7 +85,7 @@ const ChatWidget = () => {
 
 export default ChatWidget;
 
-function ChatHeader({header}:{header:React.ReacNode | string}){
+function ChatHeader({header}:{header:React.ReactNode | string}){
   return(
           <div className='flex items-center justify-between bg-black p-3 rounded-t-lg text-white'>
             <h2 className={'ml-4'}>{header}</h2>
@@ -93,10 +93,10 @@ function ChatHeader({header}:{header:React.ReacNode | string}){
   )
 }
 
-function ChatMessages({messages, messagesEndRef}){
+function ChatMessages({messages=[], messagesEndRef=null}:{messages:any[], messagesEndRef:any}){
     return(
           <div className='flex-1 overflow-y-auto p-4 space-y-4 border-b border-black nodeag'>
-            {messages.map((message, index) => (
+            {messages.map((message:{role:string,content:any[]}, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -115,7 +115,7 @@ function ChatMessages({messages, messagesEndRef}){
     )
 }
 
-function UserPromptInput({sendMessage}){
+function UserPromptInput({sendMessage}:{sendMessage:Function}){
   const [prompt, setPrompt] = useState('');
 
  return(
@@ -135,7 +135,7 @@ function UserPromptInput({sendMessage}){
                     }});
                   }
                 }}
-                onInput={(e) => {
+                onInput={(e:any) => {
                   setPrompt(e.target.value);
                 }}
               />

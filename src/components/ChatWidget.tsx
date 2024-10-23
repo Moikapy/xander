@@ -5,14 +5,14 @@ import MessageContent from './MessageContent';
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [width, setWidth] = useState(320); // Initial width
   const [height, setHeight] = useState(480); // Initial height
   const [originalSize, setOriginalSize] = useState({ width: 320, height: 480 });
   const isResizing = useRef(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<any>(null);
   const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
 
   const { invoke_graph } = useInvoke({
@@ -41,10 +41,10 @@ const ChatWidget = () => {
     setInput('');
     setIsLoading(true);
     try {
-      const { data, error } = await invoke_graph(input);
-      const aiMessage = { role: 'assistant', content: data.message };
+      const { data } = await invoke_graph(input);
+      const aiMessage = { role: 'assistant', content: data?.message };
       setMessages((prev) => [...prev, aiMessage]);
-    } catch (error) {
+    } catch (error:any) {
       console.error('Error sending message:', error.message);
       setMessages((prev) => [
         ...prev,
@@ -56,7 +56,7 @@ const ChatWidget = () => {
   };
 
   // Resize event handlers
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e:any) => {
     if (!isResizing.current) return;
     setWidth((prevWidth) =>
       Math.max(200, Math.min(window.innerWidth - 20, prevWidth + -e.movementX))
@@ -174,7 +174,7 @@ const ChatWidget = () => {
                     sendMessage();
                   }
                 }}
-                onInput={(e) => {
+                onInput={(e:any) => {
                   setInput(e.target.value);
                 }}
               />

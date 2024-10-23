@@ -1,7 +1,7 @@
 'use client'
-import React,{Fragment} from 'react'
-import Navbar from '@/src/components/Navbar'
-import ChatWidget from '@/src/components/ChatWidget';
+import React from 'react'
+import Navbar from '@/components/Navbar'
+import ChatWidget from '@/components/ChatWidget';
 //import '@/src/styles/globals.css';
 export default function Layout({children}:{children:React.ReactNode}) {
   return(   

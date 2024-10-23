@@ -1,15 +1,12 @@
 import "dotenv/config";
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { cors, HTTPMethod } from "@elysiajs/cors";
-import { staticPlugin } from "@elysiajs/static";
+
 import { jwt } from "@elysiajs/jwt";
-import { opentelemetry } from "@elysiajs/opentelemetry";
-import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
-import { withAxiom, AxiomRequest } from 'next-axiom';
+import { withAxiom } from 'next-axiom';
 // Routes
-import studio_routes from "./studio/index.ts";
+import studio_routes from "./studio";
 
 const corsConfig = {
   origin: "*",

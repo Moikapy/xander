@@ -2,7 +2,6 @@
   "name": "xander",
   "version": "0.0.0",
   "private": false,
-  "module": "main.ts",
   "scripts": {
     "build": "next build",
     "start": "next start",
@@ -11,6 +10,7 @@
     "dev": "bun next dev",
     "dev:css": "bunx --watch tailwindcss -i ./src/styles/globals.css -o ./public/global.css",
     "dev:safe": "docker compose -f docker-compose-dev.yml up --build",
+    "staging:safe": "docker compose -f docker-compose-staging.yml up --build",
     "format": "prettier --write \"**/*.(js|ts)\"  \"**/**/*.(js|ts)\"",
     "db:start": "bun supabase start",
     "db:stop": "bun supabase stop",
@@ -63,6 +63,7 @@
     "@types/bun": "^1.1.11",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
+    "@types/react-syntax-highlighter": "^15.5.13",
     "autoprefixer": "^10.4.20",
     "bun-types": "latest",
     "daisyui": "^4.12.13",

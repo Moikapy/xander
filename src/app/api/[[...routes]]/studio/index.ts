@@ -2,7 +2,7 @@ import { Elysia, t } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { Logger } from 'next-axiom';
 //API Routes
-import { chat } from "../../../routes/chat.ts";
+import { chat } from "../../../../routes/chat";
 
 class ChatInput {
   prompt: string;
@@ -29,13 +29,13 @@ class ChatInput {
 const studio_routes = new Elysia()
   .use(
     rateLimit({
-      number: 50,
+      max: 50,
     }),
   )
   .decorate("body", new ChatInput())
   .post(
     "/chat",
-    async({ body,...req }) => {
+    async({ body }) => {
       const log = new Logger();
       log.info('Model used: ', { model_name: body.model });
       
@@ -59,12 +59,6 @@ const studio_routes = new Elysia()
           default: "you are a helpful assistant",
         }),
       }),
-    },
-    {
-      detail: {
-        summary: "Chat with AI",
-        tag: ["Chat"],
-      },
-    },
+    }
   );
 export default studio_routes;

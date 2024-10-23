@@ -1,4 +1,4 @@
-import Chat from "@/src/components/Chat.tsx";
+import Chat from "@/components/Chat";
 import { fn } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export

@@ -1,12 +1,10 @@
 import { useCallback } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import Chat from '../Chat.tsx' 
+import Chat from '../Chat' 
 const handleStyle = { left: 10 };
  
-export default function SimpleChatNode({ data }) {
-  const onChange = useCallback((evt) => {
-    console.log(evt.target.value);
-  }, []);
+export default function SimpleChatNode() {
+
  
   return (
     <>

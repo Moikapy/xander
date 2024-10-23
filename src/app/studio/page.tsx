@@ -4,7 +4,7 @@ import { ReactFlow, Background, Controls, MiniMap,  addEdge,
   applyEdgeChanges,
   applyNodeChanges,  } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import SimpleChatNode from '@/src/components/nodes/SimpleChatNode.tsx';
+import SimpleChatNode from '@/components/nodes/SimpleChatNode';
 
 
 const initialNodes = [
@@ -18,21 +18,21 @@ const initialNodes = [
 ]
 
 
-function Studio({...props}) {
+function Studio() {
   const nodeTypes = useMemo(() => ({ simpleChatNode: SimpleChatNode }), []);
-    const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState([]);
+    const [nodes, setNodes] = useState<any[]>(initialNodes);
+  const [edges, setEdges] = useState<any[]>([]);
 
   const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    (changes:any) => setNodes((nds) => applyNodeChanges(changes, nds)),
     [setNodes],
   );
   const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    (changes:any) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges],
   );
   const onConnect = useCallback(
-    (connection) => setEdges((eds) => addEdge(connection, eds)),
+    (connection:any) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges],
   );
   return(
@@ -41,7 +41,7 @@ function Studio({...props}) {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      nodeTypes={nodeTypes}
+      edges={edges}
       fitView>
         <Background />
         <Controls />

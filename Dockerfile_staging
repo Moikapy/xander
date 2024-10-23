@@ -10,7 +10,7 @@ COPY package*.json ./
 
 # Step 4: Install the project dependencies
 
-RUN bun install  --production
+RUN bun install 
 
 # Step 5: Copy the rest of :the application files to the working directory
 COPY . .

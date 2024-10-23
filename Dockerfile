@@ -15,8 +15,5 @@ RUN bun install
 # Step 5: Copy the rest of :the application files to the working directory
 COPY . .
 
-# Step 6: Expose the port your app runs on (default: 3000 for Express apps)
-EXPOSE 3000
-
 # Step 7: Define the command to run your app
-CMD ["bun", "run" ,"dev"]
+CMD npm run build && npm run start

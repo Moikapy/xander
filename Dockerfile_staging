@@ -1,6 +1,6 @@
 
 # Step 1: Use an official Node.js runtime as a parent image
-FROM oven/bun:slim
+FROM oven/bun
 
 # Step 2: Set the working directory inside the container
 WORKDIR /app
@@ -10,10 +10,10 @@ COPY package*.json ./
 
 # Step 4: Install the project dependencies
 
-RUN bun install
+RUN bun install 
 
 # Step 5: Copy the rest of :the application files to the working directory
 COPY . .
 
 # Step 7: Define the command to run your app
-CMD npm run build && npm run start
+CMD bun run build && bun run start

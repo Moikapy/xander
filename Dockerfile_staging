@@ -16,4 +16,4 @@ RUN bun install  --production
 COPY . .
 
 # Step 7: Define the command to run your app
-CMD npm run build && npm run start
+CMD bun run build && bun run start

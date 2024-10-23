@@ -27,7 +27,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt   
+      - ../../../etc/letsencrypt:/etc/letsencrypt   
     container_name: nginx
     working_dir: /nginx
     depends_on:

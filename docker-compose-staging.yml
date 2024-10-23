@@ -2,6 +2,7 @@
 version: "3.8"
 services:
   app:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile_staging
@@ -13,6 +14,7 @@ services:
       - .:/app
       - /app/node_modules
   mongo:
+    restart: unless-stopped
     image: mongo
     ports:
       - "27017:27017"
@@ -21,6 +23,7 @@ services:
     volumes:
       - ./mongo_data:/data/db
   nginx:
+    restart: unless-stopped
     build:
       context: ./nginx
       dockerfile: Dockerfile_staging
@@ -31,5 +34,6 @@ services:
       - app
     ports:
       - "80:80"
+    
 volumes:
   mongo_data:

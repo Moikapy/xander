@@ -1,14 +1,39 @@
 
-version: '3.8'
+version: "3.8"
 services:
-  xander-api:
-    build: 
+  app:
+    restart: unless-stopped
+    build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_staging
     ports:
-      - "3001:3000"
+      - "3000:3000"
+    depends_on:
+      - mongo
     volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules  # This line tells Docker not to override with host's empty node_modules
+      - .:/app
+  mongo:
+    restart: unless-stopped
+    image: mongo
+    ports:
+      - "27017:27017"
     environment:
-      - NODE_ENV=production
+      MONGO_INITDB_DATABASE: studio_moika_dev
+    volumes:
+      - ./mongo_data:/data/db
+  nginx:
+    restart: unless-stopped
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile_staging
+      
+    container_name: nginx
+    working_dir: /nginx
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    
+volumes:
+  mongo_data:

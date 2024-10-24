@@ -2,11 +2,28 @@ import "dotenv/config";
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { cors, HTTPMethod } from "@elysiajs/cors";
-
-import { jwt } from "@elysiajs/jwt";
-import { withAxiom } from 'next-axiom';
+import { MongoClient, ObjectId } from "mongodb";
+import { withAxiom } from "next-axiom";
 // Routes
+import { auth_routes } from "./auth";
 import studio_routes from "./studio";
+// DAO
+// MongoDB connection setup
+let init = false
+  const MONGO_URI = process.env.MONGOURI || "mongodb://mongo:27017";
+  const DATABASE_NAME = process.env.DATABASE_NAME || "xander_app";
+let db: any;
+let usersCollection: any;
+let blogsCollection: any;
+
+async function connectToDatabase() {
+  const client = new MongoClient(MONGO_URI);
+  await client.connect();
+  db = client.db(DATABASE_NAME);
+  usersCollection = db.collection("users");
+  blogsCollection = db.collection("blogs");
+}
+
 
 const corsConfig = {
   origin: "*",
@@ -27,15 +44,20 @@ const swaggerConfig = {
 };
 
 const app = new Elysia({ prefix: "/api" })
-  .use(
-    jwt({
-      name: "jwt",
-      secret: process.env.SECRET || "SECRET",
-    }),
-  )
   .use(cors(corsConfig))
   .use(swagger(swaggerConfig))
-
+  .resolve(async () => {
+    if (!init) {
+      console.log("Connecting");
+      connectToDatabase();
+      init = true;
+      
+    } else {
+      console.log("Connected to MongoDB");
+    }
+    return { db, usersCollection, blogsCollection };
+  })
+  .use(auth_routes)
   .use(studio_routes);
 
 // Expose methods

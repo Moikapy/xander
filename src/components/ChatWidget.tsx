@@ -105,7 +105,7 @@ const ChatWidget = () => {
         <button
           onClick={() => setIsOpen(true)}
           className='bg-black text-white rounded-full p-4 shadow-lg hover:bg-gray-800 focus:outline-none'>
-          💬
+          AI Chat 💬
         </button>
       )}
 

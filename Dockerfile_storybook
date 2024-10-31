@@ -3,7 +3,7 @@
 FROM oven/bun:slim
 
 # Step 2: Set the working directory inside the container
-WORKDIR /app
+WORKDIR /storybook
 
 # Step 3: Copy the package.json and package-lock.json (if available) to the working directory
 COPY package*.json ./
@@ -12,6 +12,7 @@ COPY package*.json ./
 
 RUN bun install
 
+
 # Step 5: Copy the rest of :the application files to the working directory
 COPY . .
 
@@ -19,4 +20,4 @@ COPY . .
 EXPOSE 3000
 
 # Step 7: Define the command to run your app
-CMD ["bun", "--bun","run" ,"dev"]
+CMD ["bun","run" ,"storybook"]

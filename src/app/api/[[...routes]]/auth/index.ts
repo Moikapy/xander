@@ -6,7 +6,6 @@ import dao from "@/dao";
 let init = false;
 
 export const auth_routes = new Elysia()
-
   .use(
     jwt({
       name: "jwt",

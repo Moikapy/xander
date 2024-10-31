@@ -10,8 +10,8 @@ import studio_routes from "./studio";
 // DAO
 // MongoDB connection setup
 let init = false
-  const MONGO_URI = process.env.MONGOURI || "mongodb://mongo:27017";
-  const DATABASE_NAME = process.env.DATABASE_NAME || "xander_app";
+const MONGO_URI = process.env.MONGOURI || "mongodb://mongo:27017";
+const DATABASE_NAME = process.env.DATABASE_NAME || "xander_app";
 let db: any;
 let usersCollection: any;
 let blogsCollection: any;
@@ -36,11 +36,13 @@ const corsConfig = {
 const swaggerConfig = {
   documenation: {
     info: {
-      title: "API Documentation",
+      title: "Xander API Documentation",
       version: "0.0.0",
     },
   },
+
   path: "/",
+  isEditable: true,
 };
 
 const app = new Elysia({ prefix: "/api" })
@@ -56,7 +58,7 @@ const app = new Elysia({ prefix: "/api" })
       console.log("Connected to MongoDB");
     }
     return { db, usersCollection, blogsCollection };
-  })
+  }).get("/json", async ({redirect}) => redirect("api"))
   .use(auth_routes)
   .use(studio_routes);
 

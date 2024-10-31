@@ -20,10 +20,11 @@ To set up the project, you can install the dependencies using:
 
 ```bash
 npm install
-
-# or
-
+# or 
 yarn install
+# or
+bun install
+
 ```
 
 ## Usage
@@ -31,21 +32,9 @@ yarn install
 To start the development server:
 
 ```bash
-npm run start
-
+npm run dev:safe
 # or
-
-yarn start
+yarn dev:safe
+# or 
+bun dev:safe
 ```
-
-For development, you can also use:
-
-```bash
-npm run dev
-
-# or
-
-yarn dev
-```
-
-The project includes additional scripts for building, linting, running storybook, and working with Docker. Check the `package.json` for more details on the available commands.

@@ -1,14 +1,14 @@
-import Chat from "@/components/Chat";
+import ProfilePage from "../../views/profile";
 import { fn } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
-  title: "Components/Chat",
-  component: Chat,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "centered",
-  },
+  title: "view/profile",
+  component: ProfilePage,
+  // parameters: {
+  //   // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
+  //   layout: "centered",
+  // },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
@@ -20,6 +20,6 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Widget = {
+export const View = {
   args: {},
 };

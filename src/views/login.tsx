@@ -2,42 +2,31 @@
 // /app/login/page.jsx
 
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/api";
+
 import { useState } from "react";
+import useAuth from "@/hooks/useAuth";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(null);
-
-    try {
-      const response: any = await api.login.post({
-        email,
-        password,
-      });
-      console.log(response);
-
-      if (response.status === 200 && response.data.body.token) {
-        // Save the token to local storage or cookies (you can choose your preferred storage method)
-        localStorage.setItem("authToken", response.data.body.token);
-        router.push("/");
-      } else {
-        setError(response.message || "Login failed");
-      }
-    } catch (err) {
-      setError("An error occurred during login");
-    }
-  };
+  const { auth_user, error }: any = useAuth();
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100 font-mono">
       <div className="card w-96 bg-white shadow-xl">
         <div className="card-body">
           <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
-          <form onSubmit={handleLogin}>
+          <form
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+              e.preventDefault();
+              auth_user({
+                email,
+                password,
+              }).then(() => {
+                router.push("/");
+              });
+            }}
+          >
             <div className="form-control mb-4">
               <label className="label">
                 <span className="label-text">Email</span>

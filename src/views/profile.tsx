@@ -1,26 +1,54 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 
-const ProfilePage = ({ user_name }) => {
+const ProfilePage = ({
+  user_name,
+  handle,
+  bio,
+  avatar,
+  name,
+}: {
+  user_name: string;
+  handle: string;
+  bio: string;
+  avatar: string;
+  name: string;
+}) => {
   return (
-    <div className="flex flex-col base-100">
-      {/* Section 1- Banner and Profile Pictures */}
-      <div className="bg-stone h-24 base-content">
-        {/* Banner */}
-        <div className="bg-stone  w-full">
-          {/* Avatar */}
-          <div className="flex flex-col items-start justify-center bg-stone-800 h-48">
-            <div className="flex items-center justify-start h-24 w-24 bg-stone-700 rounded-full">
+    <div className="flex flex-col items-center base-100 max-w-screen-lg mx-auto p-4">
+      <div className="flex flex-col items-center mb-8">
+        <div className="bg-stone h-32 w-full flex justify-center items-center relative">
+          {/* Avatar Image */}
+          <div className="avatar relative">
+            <div className="w-32 h-32 rounded-full overflow-hidden">
               <img
-                src="" // Add the user's profile picture here
-                alt="Profile Picture"
-                className="h-20 w-20 rounded-full bg-white"
+                className="rounded-full"
+                src={
+                  avatar ||
+                  "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                }
+                alt="User Avatar"
               />
             </div>
           </div>
         </div>
-        <div className="divider"></div>
       </div>
+
+      {/* Divider */}
+      <div className="divider"></div>
+
+      {/* User Info Display */}
+      <div className="text-center mb-4">
+        <h1 className="text-2xl font-bold mb-2">{name || "User Name"}</h1>
+        <p className="text-gray-500">@{handle || "username"}</p>
+      </div>
+
+      {/* Bio Display */}
+      <div className="max-w-md text-center mb-8">
+        <p className="text-gray-700">{bio || "Tell us about yourself"}</p>
+      </div>
+
+      {/* Social Links + Integrations (if any) */}
+      {/* Optional Section for Additional Info */}
     </div>
   );
 };

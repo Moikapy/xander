@@ -15,8 +15,8 @@ function useInvoke({
 }) {
   const [state, setState] = useState({
     max_tokens: 200,
-    model: 'claude-3-haiku-20240307',
-    system_message: 'you are a helpful assistant',
+    model: "claude-3-5-haiku-20241022",
+    system_message: "you are a helpful assistant",
     temperature: 0.5,
   });
 

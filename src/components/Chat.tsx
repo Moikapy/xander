@@ -14,9 +14,9 @@ const ChatWidget = () => {
  // const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
 
   const { invoke_graph } = useInvoke({
-    model: 'claude-3-haiku-20240307',
+    model: "claude-3-5-haiku-20241022",
     max_tokens: 4096,
-    system_message: 'You are the customer representative of moikas.com',
+    system_message: "You are the customer representative of moikas.com",
     temperature: 0.3,
   });
 /*

@@ -1,7 +1,7 @@
 export const validate_auth = async ({ headers, jwt }) => {
   // 1. Extract the 'Authorization' header from the incoming request
   const auth = headers["authorization"];
-  console.log(auth);
+  console.log("auth", auth);
 
   // 2. Check if the 'Authorization' header contains a Bearer token
   //    If it starts with 'Bearer ', extract the token string after 'Bearer '

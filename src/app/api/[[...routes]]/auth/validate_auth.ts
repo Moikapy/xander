@@ -1,7 +1,7 @@
 export const validate_auth = async ({ headers, jwt }) => {
   // 1. Extract the 'Authorization' header from the incoming request
   const auth = headers["authorization"];
-  console.log("auth", auth);
+  //console.log('auth', auth.split(' ')[1]);
 
   // 2. Check if the 'Authorization' header contains a Bearer token
   //    If it starts with 'Bearer ', extract the token string after 'Bearer '
@@ -14,7 +14,7 @@ export const validate_auth = async ({ headers, jwt }) => {
   // 4. Verify the JWT token using the jwt_auth module
   //    This step authenticates the token and retrieves the user information
   const user = await jwt.verify(token);
-
+ //console.log('user', user);
   // 5. Return an object containing the authenticated user information
   //    This will be available inside de request object
   return { user };

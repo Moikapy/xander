@@ -10,7 +10,7 @@ export default function Layout({children}:{children:React.ReactNode}) {
       <div className="flex flex-col h-dvh"> {children}</div>
 
       {/* Footer */}
-      <ChatWidget />
+      {/* <ChatWidget /> */}
       <footer className="w-full flex justify-center py-6 text-sm">
         <div className="max-w-7xl flex justify-between items-center">
           <p>

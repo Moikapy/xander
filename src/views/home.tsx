@@ -9,7 +9,7 @@ const Home = () => {
         <p className='text-sm mb-6'>Open-Source AI Studio.</p>
 
         <div className='flex flex-col space-y-4'>
-          <Link href='/login' className='btn btn-wide bg-black'>
+          <Link href='/portal' className='btn btn-wide bg-black'>
             Enter
           </Link>
         </div>

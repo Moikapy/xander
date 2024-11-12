@@ -1,23 +1,38 @@
 'use client';
-import React from 'react';
+import React, {use, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import Login from '@/views/login';
+import Loading from '@/components/Loading';
 import useAuth from '@/hooks/useAuth';
 const LoginPage = () => {
   const router = useRouter();
-  const {auth_user, error}: any = useAuth();
-  return (
+  const [loading, setLoading] = useState(true);
+  const {login, auth, error}: any = useAuth();
+  useEffect(() => {
+    auth().then((isAuth: boolean) => {
+      if (isAuth) {
+        router.push('/portal');
+      } else {
+        setLoading(false);
+      }
+    });
+  }, []);
+
+  return !loading ? (
     <Login
       error={error}
       onSubmit={({email, password}) => {
-        auth_user({
+        login({
           email,
           password,
-        }).then(() => {
-          router.push('/');
+        }).then((res) => {
+          console.log('res', res);
+          //res.status === 200 && router.push('/portal');
         });
       }}
     />
+  ) : (
+    <Loading />
   );
 };
 export default LoginPage;

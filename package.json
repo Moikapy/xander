@@ -30,6 +30,7 @@
     "@langchain/community": "^0.3.13",
     "@langchain/core": "^0.3.18",
     "@langchain/langgraph": "^0.2.20",
+    "@langchain/langgraph-checkpoint-mongodb": "^0.0.4",
     "@material-tailwind/react": "^2.1.10",
     "@mlc-ai/web-llm": "^0.2.74",
     "@opentelemetry/exporter-jaeger": "^1.27.0",

@@ -1,15 +1,15 @@
 //./src/llm.ts
-import "dotenv/config";
-import { ChatAnthropic } from "@langchain/anthropic";
+import 'dotenv/config';
+import {ChatAnthropic} from '@langchain/anthropic';
 // Import everything
-import * as webllm from "@mlc-ai/web-llm";
-import { ChatWebLLM } from "@langchain/community/chat_models/webllm";
+import * as webllm from '@mlc-ai/web-llm';
+import {ChatWebLLM} from '@langchain/community/chat_models/webllm';
 
 export async function llm({
   model,
   temperature,
   max_tokens,
-  provider = "local",
+  provider = 'local',
 }: {
   model: string;
   temperature: number;
@@ -23,20 +23,19 @@ export async function llm({
     apiKey: process.env.ANTHROPIC_API_KEY,
   });
 
-  if (provider === "anthropic") {
+  if (provider === 'anthropic') {
     return anthropic;
   }
 
   const webllm = new ChatWebLLM({
-    model: "Llama-3.2-1B-Instruct-q4f32_1-MLC",
+    model: 'Llama-3.2-1B-Instruct-q4f32_1-MLC',
     maxRetries: 3,
     chatOptions: {
       temperature: temperature,
-      topP: 0.9,
-      presencePenalty: 0.0,
-      frequencyPenalty: 0.0,
-      maxTokens: max_tokens,
-    }
+      top_p: 0.9,
+      presence_penalty: 0.0,
+      frequency_penalty: 0.0,
+    },
   });
   await webllm.initialize((progress) => {
     console.log(progress);

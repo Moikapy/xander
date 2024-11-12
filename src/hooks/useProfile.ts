@@ -7,7 +7,7 @@ export default function useProfile() {
     getProfile: async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response:any = await api.profile.get({
+        const response: any = await api.profile.get({
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -26,8 +26,8 @@ export default function useProfile() {
 
         console.log('getProfile', response);
 
-        if (response.status === 200 && response.body.user) {
-          return response.body.user;
+        if (response.status === 200 && response.data) {
+          return response.data;
         } else {
           return null;
         }
@@ -35,34 +35,31 @@ export default function useProfile() {
         return null;
       }
     },
-    editProfile: async (props:any) => {
+    editProfile: async (props: any) => {
       try {
- 
-
         const token = localStorage.getItem('authToken');
 
         if (!token) {
           return null;
         }
-               console.log('props', props,);
-          // Log the contents of formData
+        console.log('props', props);
+        // Log the contents of formData
         // for (let [key, value] of props.entries()) {
         //   console.log(`${key}:`, value);
         // }
 
-        const response = await api.profile.edit.post(
-          {...props},
+        const response: any = await api.profile.edit.post(
           {
-            headers: {
-              authorization: `Bearer ${token}`,
-              'Content-Type': 'multipart/form-data',
-            },
+            ...props,
+          },
+          {
+            headers: {Authorization: `Bearer ${token}`},
           }
         );
         console.log(response);
 
-        if (response.status === 200) {
-          return response.data.body.message;
+        if (response?.status === 200) {
+          return await response.data.body.message;
         } else {
           return null;
         }

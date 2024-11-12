@@ -1,6 +1,6 @@
-import {useState, useMemo} from 'react';
-import {api} from '../lib/api';
-import {chat} from '../lib/chat';
+import { useState, useMemo } from "react";
+import { api } from "../lib/api";
+import chat from '../lib/chat';
 // Invoke LLM
 function useInvoke({
   model,
@@ -31,12 +31,18 @@ function useInvoke({
   }, [model, max_tokens, system_message, temperature]);
   return {
     invoke_graph: async function (prompt: string) {
-      const data =await chat({
+      const data:
+        | {
+            message: string;
+            metadata: any;
+          }
+        | any = await chat({
         ...state,
         prompt: prompt,
       });
       return {
-        data,
+        message: data.message,
+        metadata: data.metadata,
       };
     },
   };

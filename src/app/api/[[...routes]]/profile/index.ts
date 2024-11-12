@@ -102,7 +102,8 @@ const profile_routes = new Elysia({
   .post(
     '/profile/edit',
     async ({jwt, db, usersCollection, profileCollection, body, user}) => {
-      const {s3, SPACE_NAME} = await handleFileSpaces();
+      console.log('user', body);
+
       const _user = await usersCollection.findOne({
         email: user.email,
       });
@@ -120,18 +121,27 @@ const profile_routes = new Elysia({
 
         // Check if avatar is provided as a base64 string
         if (avatar) {
+          console.log('avatar', avatar);
+        
+          const {s3, SPACE_NAME} = await handleFileSpaces();
           const mimeType = avatar.type;
-          const fileBuffer = Buffer.from(await avatar.arrayBuffer());
+          const file = new File([avatar],`avatars/0x69420${_user._id}8008.png`, {
+            type: mimeType /* your Blob type */,
+          });
+          const avatarBuffer = await avatar.arrayBuffer()
+          const fileBuffer = Buffer.from(avatarBuffer);
           const s3Params: any = {
             Bucket: SPACE_NAME || '',
             Key: `avatars/0x69420${_user._id}8008`, // Create a unique file path
             Body: fileBuffer, // The binary buffer of the decoded file
-            ContentEncoding: 'base64', // Required to indicate base64 encoding
+            //ContentEncoding: 'base64', // Required to indicate base64 encoding
             ContentType: mimeType, // Update based on file type if necessary
             ACL: 'public-read',
           };
 
           try {
+            console.log('s3Params', s3Params);
+
             await s3.send(new PutObjectCommand(s3Params));
             // Read the object.
             const {Body} = await s3.send(new GetObjectCommand(s3Params));
@@ -167,6 +177,7 @@ const profile_routes = new Elysia({
           }
         } else {
           // No new avatar provided, retain the current one
+          console.log('avatar', currentAvatarUrl);
           avatarUrl = currentAvatarUrl;
         }
 
@@ -203,6 +214,7 @@ const profile_routes = new Elysia({
     {
       headers: t.Object({
         authorization: t.String(),
+        'content-type': t.String(),
       }),
       body: t.Object({
         name: t.String(),
@@ -210,6 +222,7 @@ const profile_routes = new Elysia({
         bio: t.String(),
         avatar: t.File(), // Expect avatar as a base64 string or null
       }),
+      type: 'multipart/form-data',
     }
   );
 

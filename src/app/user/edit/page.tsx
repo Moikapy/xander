@@ -1,11 +1,13 @@
 'use client';
 import useProfile from '@/hooks/useProfile';
+import useAuth from '@/hooks/useAuth';
 import ProfileEdit from '@/views/profile_edit';
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 
 const Profile = () => {
   const {getProfile} = useProfile();
+  
   const [profile, setProfile] = useState<{
     name: string;
     user_name: string;
@@ -19,7 +21,8 @@ const Profile = () => {
     //console.log('profile', _profile);
 
     if (!_profile) {
-      router.push('/user/edit');
+      //router.push('/user/edit');
+      return
     }
     setProfile(_profile);
   }
@@ -27,16 +30,13 @@ const Profile = () => {
     handleEditProfile();
   }, [profile]);
 
-  return profile ? (
-    <ProfileEdit
+  return<ProfileEdit
       name={profile?.name}
       user_name={profile?.user_name}
       handle={profile?.handle}
       bio={profile?.bio}
       avatar={profile?.avatar}
     />
-  ) : (
-    <div>Loading...</div>
-  );
+  
 };
 export default Profile;

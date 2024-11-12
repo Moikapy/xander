@@ -35,33 +35,27 @@ export default function useProfile() {
         return null;
       }
     },
-    editProfile: async ({
-      name,
-      handle,
-      bio,
-      avatar,
-    }: {
-      name: string;
-      handle: string;
-      bio: string;
-      avatar: File;
-    }) => {
+    editProfile: async (props:any) => {
       try {
+ 
+
         const token = localStorage.getItem('authToken');
 
         if (!token) {
           return null;
         }
-        const response: any = await api.profile.edit.post(
-          {
-            name,
-            handle,
-            bio,
-            avatar,
-          },
+               console.log('props', props,);
+          // Log the contents of formData
+        // for (let [key, value] of props.entries()) {
+        //   console.log(`${key}:`, value);
+        // }
+
+        const response = await api.profile.edit.post(
+          {...props},
           {
             headers: {
               authorization: `Bearer ${token}`,
+              'Content-Type': 'multipart/form-data',
             },
           }
         );

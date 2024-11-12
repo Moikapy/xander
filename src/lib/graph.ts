@@ -4,7 +4,7 @@ import {
   END,
   START,
   StateGraph,
-} from "@langchain/langgraph";
+} from "@langchain/langgraph/web";
 import { createAgent } from "./agent";
 import { createNode } from "./createNode";
 import { llm } from "./llm";

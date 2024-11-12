@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import useProfile from "@/hooks/useProfile";
 const ProfileEdit = ({
   user_name,
   name,
@@ -20,11 +20,15 @@ const ProfileEdit = ({
     avatar ||
       "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
   );
-
+const [blob, setBlob] = useState<any>(null);
+  const { editProfile } = useProfile();
   // Handle avatar file upload
   const handleAvatarChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+        //  const newBlob = new Blob([file], { type: file.type });
+        //  const newFile = new File([newBlob], file.name, { type: file.type });
+          setBlob(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatar(e.target?.result); // Update the avatar preview
@@ -37,7 +41,22 @@ const ProfileEdit = ({
     <div className="flex flex-col justify-start base-100 max-w-screen-lg mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">Edit Profile</h1>
-        <button className="btn btn-outline">Done</button>
+        <button className="btn btn-outline" onClick={async()=>{
+            const formData = new FormData();
+            formData.append('name', _name);
+            formData.append('handle', _handle);
+            formData.append('bio', _bio);
+
+            if (blob) {
+              formData.append('avatar', blob);
+            }
+              // Log the contents of formData
+            for (let [key, value] of formData.entries()) {
+              console.log(`${key}:`, value);
+            }
+
+          await editProfile(formData);
+        }}>Done</button>
       </div>
 
       {/* Section 1 - Banner and Profile Pictures */}

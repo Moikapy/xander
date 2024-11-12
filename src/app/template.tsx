@@ -16,7 +16,7 @@ export default function Layout({children}:{children:React.ReactNode}) {
           <p>
             &copy; {new Date().getFullYear()} Moikas LLC. All Rights Reserved.
           </p>{" "}
-          <p>v 0.0.0</p>
+          <p>v 0.1.0</p>
         </div>
       </footer>
     </div>

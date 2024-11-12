@@ -1,25 +1,26 @@
 'use client';
-// /app/views/login/page.tsx
+// /app/signup/page.jsx
 import {useState} from 'react';
-const Login = ({
-  onSubmit,
+
+const Signup = ({
+  handleSignup,
   error,
 }: {
-  onSubmit: ({email, password}: {email: string; password: string}) => void;
-  error: string;
+  handleSignup: ({email, password}: {email: string; password: string}) => void;
+  error: string | null;
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-base-100 font-mono'>
-      <div className='card w-96 bg-white shadow-xl'>
+    <div className='flex justify-center items-center bg-base-100 font-mono'>
+      <div className='card bg-white w-96 shadow-xl'>
         <div className='card-body'>
-          <h2 className='text-2xl font-bold mb-4 text-center'>Login</h2>
+          <h2 className='text-2xl font-bold mb-4 text-center'>Sign Up</h2>
           <form
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+            onSubmit={(e: {preventDefault: () => void}) => {
               e.preventDefault();
-              onSubmit({
+              handleSignup({
                 email,
                 password,
               });
@@ -51,22 +52,22 @@ const Login = ({
             <div className='form-control mt-6'>
               <button
                 type='submit'
-                className='btn btn-wide bg-black text-white w-full'>
-                Login
+                className='btn btn-wide w-full'>
+                Sign Up
               </button>
             </div>
           </form>
           <p className='text-center mt-4'>
-            Don't have an account?{' '}
-            <a href='/signup' className='text-secondary hover:text-primary'>
-              Sign up
+            Already have an account?{' '}
+            <a href='/login' className='text-secondary hover:text-accent'>
+              Log in
             </a>
           </p>
-          {error && <p className='text-red-500 text-center mt-4'>{error}</p>}
+          {error && error}
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

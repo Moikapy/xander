@@ -25,10 +25,12 @@ export default function useAuth() {
           // Save the token to local storage or cookies (you can choose your preferred storage method)
           localStorage.setItem("authToken", response.data.body.token);
         } else {
-          setError(response.message || "Login failed");
+          // setError(response.message || "Login failed");
+          throw new Error("Login failed");
         }
       } catch (err) {
         setError("An error occurred during login");
+        
       }
     },
   };

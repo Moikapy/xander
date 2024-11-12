@@ -2,7 +2,7 @@ import { Elysia, t } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { Logger } from 'next-axiom';
 //API Routes
-import { chat } from "../../../../routes/chat";
+import { chat } from "../../../../lib/chat";
 
 class ChatInput {
   prompt: string;

@@ -1,13 +1,7 @@
 import {Elysia, t} from 'elysia';
 import handleFileSpaces from '@/utilities/handle_file_spaces';
-import fs from 'fs';
 import {
-  S3Client,
   PutObjectCommand,
-  CreateBucketCommand,
-  DeleteObjectCommand,
-  DeleteBucketCommand,
-  paginateListObjectsV2,
   GetObjectCommand,
   DeleteObjectRequest,
 } from '@aws-sdk/client-s3';
@@ -83,7 +77,6 @@ const profile_routes = new Elysia({
           status: 200,
           body: {
             message: 'User found',
-
             email: _user.email,
             name: profile.name,
             handle: profile.handle,

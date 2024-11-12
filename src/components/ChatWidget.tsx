@@ -42,8 +42,8 @@ const ChatWidget = () => {
     setInput('');
     setIsLoading(true);
     try {
-      const { data } = await invoke_graph(input);
-      const aiMessage = { role: 'assistant', content: data?.message };
+      const { message, metadata } = await invoke_graph(input);
+      const aiMessage = { role: 'assistant', content: message };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error:any) {
       console.error('Error sending message:', error.message);

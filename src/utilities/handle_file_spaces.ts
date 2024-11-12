@@ -1,13 +1,4 @@
-import {
-  S3,
-  S3Client,
-  PutObjectCommand,
-  CreateBucketCommand,
-  DeleteObjectCommand,
-  DeleteBucketCommand,
-  paginateListObjectsV2,
-  GetObjectCommand,
-} from '@aws-sdk/client-s3';
+import {S3} from '@aws-sdk/client-s3';
 
 export default async function handleFileSpaces() {
   // Initialize S3 with DigitalOcean Spaces credentials and endpoint

@@ -1,42 +1,20 @@
-import React, { useState } from "react";
-import { api } from "@/lib/api";
+'use client';
+import React, {useState} from 'react';
+import {api} from '@/lib/api';
+
 export default function useProfile() {
   return {
     getProfile: async () => {
       try {
-        const token = localStorage.getItem("authToken");
-        const response: Treaty.TreatyResponse<{
-          200:
-            | {
-                status: number;
-                body: {
-                  message: string;
-                  email?: undefined;
-                  name?: undefined;
-                  handle?: undefined;
-                  bio?: undefined;
-                  avatar?: undefined;
-                };
-              }
-            | {
-                status: number;
-                body: {
-                  message: string;
-                  email: any;
-                  name: any;
-                  handle: any;
-                  bio: any;
-                  avatar: any;
-                };
-              };
-        }> = await api.profile.get({
+        const token = localStorage.getItem('authToken');
+        const response:any = await api.profile.get({
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
         if (response.status === 401) {
-          localStorage.removeItem("authToken");
+          localStorage.removeItem('authToken');
         }
         if (response.status === 404) {
           return null;
@@ -46,7 +24,7 @@ export default function useProfile() {
           return null;
         }
 
-        console.log("getProfile", response);
+        console.log('getProfile', response);
 
         if (response.status === 200 && response.body.user) {
           return response.body.user;
@@ -69,7 +47,7 @@ export default function useProfile() {
       avatar: File;
     }) => {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem('authToken');
 
         if (!token) {
           return null;
@@ -83,7 +61,7 @@ export default function useProfile() {
           },
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              authorization: `Bearer ${token}`,
             },
           }
         );
@@ -100,7 +78,7 @@ export default function useProfile() {
     },
     getProfileByHandle: async (handle: string) => {
       try {
-        const response: any = await api.profile({ handle }).get();
+        const response: any = await api.profile({handle}).get();
         console.log(response);
 
         if (response.status === 200 && response.data.body.user) {

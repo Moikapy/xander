@@ -1,6 +1,6 @@
 import {useState, useMemo} from 'react';
 import {api} from '../lib/api';
-
+import {chat} from '../lib/chat';
 // Invoke LLM
 function useInvoke({
   model,
@@ -31,7 +31,7 @@ function useInvoke({
   }, [model, max_tokens, system_message, temperature]);
   return {
     invoke_graph: async function (prompt: string) {
-      const {data} = await api.chat.post({
+      const data =await chat({
         ...state,
         prompt: prompt,
       });

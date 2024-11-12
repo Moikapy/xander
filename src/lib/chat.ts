@@ -9,7 +9,13 @@ export async function chat(body: {
 }) {
   try {
     // Destructure req.body
-    const {model, temperature, system_message, max_tokens, prompt} = await body;
+    const {
+      model,
+      temperature,
+      system_message,
+      max_tokens,
+      prompt,
+    } = body;
 
     // Create Agent Graph
     const graph = await createGraph({

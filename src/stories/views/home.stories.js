@@ -1,10 +1,10 @@
-import Chat from "@/components/Chat";
+import Home from "../../views/home";
 import { fn } from "@storybook/test";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 export default {
-  title: "Components/Chat",
-  component: Chat,
+  title: "view/home",
+  component: Home,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -20,6 +20,6 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Widget = {
+export const View = {
   args: {},
 };

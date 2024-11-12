@@ -1,5 +1,5 @@
 
-import { Annotation } from "@langchain/langgraph";
+import { Annotation } from "@langchain/langgraph/web";
 
 // This defines the object that is passed between each node
 // in the graph. We will create different nodes for each agent and tool

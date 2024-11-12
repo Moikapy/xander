@@ -2,7 +2,7 @@ import { Elysia, t } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { Logger } from 'next-axiom';
 //API Routes
-import { chat } from "../../../../routes/chat";
+import  chat  from "../../../../lib/chat";
 
 class ChatInput {
   prompt: string;
@@ -13,7 +13,7 @@ class ChatInput {
 
   constructor(
     prompt: string = "",
-    model: string = "claude-2-haiku-20240307",
+    model: string = "claude-3-5-haiku-20241022",
     temperature: number = 0.5,
     system_message: string = "You are a chill assistant.",
     max_tokens: number = 200,
@@ -30,24 +30,25 @@ const studio_routes = new Elysia()
   .use(
     rateLimit({
       max: 50,
-    }),
+    })
   )
   .decorate("body", new ChatInput())
   .post(
     "/chat",
-    async({ body }) => {
+    async ({ body }) => {
       const log = new Logger();
-      log.info('Model used: ', { model_name: body.model });
-      
+      log.info("Model used: ", { model_name: body.model });
+
       //await log.flush()
-      return chat(body)},
+      return chat(body);
+    },
     {
       body: t.Object({
         prompt: t.String({
           minLength: 1,
         }),
         model: t.String({
-          default: "claude-3-haiku-20240307",
+          default: "claude-3-5-haiku-20241022",
         }),
         temperature: t.Number({
           default: 0.5,

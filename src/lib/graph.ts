@@ -4,13 +4,14 @@ import {
   END,
   START,
   StateGraph,
-} from "@langchain/langgraph";
+} from "@langchain/langgraph/web";
 import { createAgent } from "./agent";
 import { createNode } from "./createNode";
 import { llm } from "./llm";
 import { AgentState } from "./state";
 import { RunnableConfig } from "@langchain/core/runnables";
-
+import { MemorySaver } from "@langchain/langgraph/web";
+// import {MongoSaver} from "@langchain/langgraph/web";
 // Define a graph that uses the agent and the state
 export async function createGraph(props: {
   model: string;
@@ -44,5 +45,7 @@ export async function createGraph(props: {
     .addEdge("agent", END);
 
   // Finally, we compile it into a LangChain Runnable.
-  return workflow.compile();
+  return workflow.compile({
+    checkpointer: new MemorySaver(),
+  });
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import useInvoke from '../hooks/useInvoke';
 import MessageContent from './MessageContent';
 
@@ -14,10 +14,10 @@ const ChatWidget = () => {
  // const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
 
   const { invoke_graph } = useInvoke({
-    model: 'claude-3-haiku-20240307',
+    model: "claude-3-5-haiku-20241022",
     max_tokens: 4096,
-    system_message: 'You are the customer representative of moikas.com',
-    temperature: 0.3,
+    system_message: "You are the customer representative of moikas.com",
+    temperature: 0.9,
   });
 /*
   const scrollToBottom = () => {
@@ -43,8 +43,8 @@ const ChatWidget = () => {
     }
     setIsLoading(true);
     try {
-      const { data } = await invoke_graph(input);
-      const aiMessage = { role: 'assistant', content: data?.message };
+      const { message,metadata } = await invoke_graph(input);
+      const aiMessage = { role: 'assistant', content: message };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error:any) {
       console.error('Error sending message:', error?.message);
@@ -85,7 +85,7 @@ const ChatWidget = () => {
 
 export default ChatWidget;
 
-function ChatHeader({header}:{header:React.ReactNode | string}){
+export function ChatHeader({header}:{header:React.ReactNode | string}){
   return(
           <div className='flex items-center justify-between bg-black p-3 rounded-t-lg text-white'>
             <h2 className={'ml-4'}>{header}</h2>
@@ -93,62 +93,75 @@ function ChatHeader({header}:{header:React.ReactNode | string}){
   )
 }
 
-function ChatMessages({messages=[], messagesEndRef=null}:{messages:any[], messagesEndRef:any}){
-    return(
-          <div className='flex-1 overflow-y-auto p-4 space-y-4 border-b border-black nodeag'>
-            {messages.map((message:{role:string,content:any[]}, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-3/4 p-3 ${
-                    message.role === 'user'
-                      ? 'bg-black text-white border-r-4 border-white'
-                      : 'bg-white text-black border-l-4 border-black'
-                  }`}>
-                  <MessageContent content={message.content} />
-                </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef||null} />
+export function ChatMessages({
+  messages = [],
+  messagesEndRef = null,
+}: {
+  messages: any[];
+  messagesEndRef: any;
+}) {
+  return (
+    <div className='flex-1 overflow-y-auto p-4 space-y-4 border-b border-black nodeag'>
+      {messages.map((message: {role: string; content: any[]}, index) => (
+        <div
+          key={index}
+          className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+          <div
+            className={`max-w-3/4 p-3 ${
+              message.role === 'user'
+                ? 'bg-black text-white border-r-4 border-white'
+                : 'bg-white text-black border-l-4 border-black'
+            }`}>
+            <MessageContent content={message.content} />
           </div>
-    )
+        </div>
+      ))}
+      <div ref={messagesEndRef || null} />
+    </div>
+  );
 }
 
-function UserPromptInput({sendMessage}:{sendMessage:Function}){
+export function UserPromptInput({sendMessage}: {sendMessage: Function}) {
   const [prompt, setPrompt] = useState('');
 
- return(
-          <div className='p-2 border-t border-black'>
-            <div className='flex'>
-              <input
-
-                type='text'
-                value={prompt}
-                placeholder='Type your message...'
-                className='input input-bordered w-full text-black bg-white border-black placeholder-gray-500 nodrag'
-                style={{ fontFamily: 'monospace' }}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    sendMessage({input:prompt,onGeneratingResponse:()=>{
-                      setPrompt('')
-                    }});
-                  }
-                }}
-                onInput={(e:any) => {
-                  setPrompt(e.target.value);
-                }}
-              />
-              <button
-                className='btn bg-black text-white ml-2'
-                onClick={()=>sendMessage({input:prompt,onGeneratingResponse:()=>{
-                  setPrompt('')
-                }})}>
-                Send
-              </button>
-            </div>
-          </div>
- )
+  return (
+    <div className='p-2 border-t border-black'>
+      <div className='flex'>
+        <input
+          type='text'
+          value={prompt}
+          placeholder='Type your message...'
+          className='input input-bordered w-full text-black bg-white border-black placeholder-gray-500 nodrag'
+          style={{fontFamily: 'monospace'}}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') {
+              sendMessage({
+                input: prompt,
+                onGeneratingResponse: () => {
+                  setPrompt('');
+                },
+              });
+            }
+          }}
+          onInput={(e: any) => {
+            setPrompt(e.target.value);
+          }}
+        />
+        <button
+          className='btn bg-black text-white ml-2'
+          onClick={() =>
+            sendMessage({
+              input: prompt,
+              onGeneratingResponse: () => {
+                setPrompt('');
+              },
+            })
+          }>
+          Send
+        </button>
+      </div>
+    </div>
+  );
 }
 
 function ExtraFeatures(){

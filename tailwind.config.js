@@ -1,57 +1,30 @@
-const { fontFamily } = require("tailwindcss/defaultTheme");
-const withMT = require("@material-tailwind/react/utils/withMT");
-
+const { fontFamily, ...theme } = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
-module.exports = withMT({
-  darkMode: ["class"],
-  content: ["./src/app/**/*.{ts,tsx,js,jsx}","./src/components/**/*.{ts,tsx,js,jsx}"],
+module.exports = {
+  ...theme,
+  darkMode: ["class", '[data-mode="dark"]'],
+  content: [
+    "./src/**/*.{ts,tsx,js,jsx}",
+  ],
   theme: {
     container: {
       center: true,
       padding: "2rem",
       screens: {
+        sm: "480px",
+        md: "768px",
+        lg: "976px",
+        xl: "1440px",
         "2xl": "1400px",
       },
     },
+
     extend: {
-      inset: {
-        "5rem": " 5rem",
-        "20rem": "20rem",
+      height: {
+        24: "6rem",
       },
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+      width: {
+        24: "6rem",
       },
       borderRadius: {
         lg: `var(--radius)`,
@@ -59,8 +32,8 @@ module.exports = withMT({
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
-        mono: ["ui-monospace", "SFMono-Regular"],
+        sans: [...fontFamily.sans],
+        mono: ["ui-monospace", "SFMono-Regular", ...fontFamily.mono],
       },
       keyframes: {
         "accordion-down": {
@@ -78,5 +51,9 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("daisyui")],
-});
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+  daisyui: {
+    themes: ["luxury", "light", "dark"], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "dark", // name of one of the included themes for dark mode
+  },
+};

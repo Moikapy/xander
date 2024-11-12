@@ -1,42 +1,57 @@
-import "dotenv/config";
-import { Elysia } from "elysia";
-import { swagger } from "@elysiajs/swagger";
-import { cors, HTTPMethod } from "@elysiajs/cors";
+import 'dotenv/config';
+import {Elysia} from 'elysia';
+import {swagger} from '@elysiajs/swagger';
+import {cors, HTTPMethod} from '@elysiajs/cors';
 
-import { jwt } from "@elysiajs/jwt";
-import { withAxiom } from 'next-axiom';
+import {withAxiom} from 'next-axiom';
+import {jwt} from '@elysiajs/jwt';
 // Routes
-import studio_routes from "./studio";
+import {auth_routes} from './auth';
+import studio_routes from './studio';
+import profile_routes from './profile';
+import {validate_auth} from './auth/validate_auth';
+import { connectToDatabase } from '../middleware';
+
+
 
 const corsConfig = {
-  origin: "*",
-  methods: ["GET", "POST", "PATCH", "DELETE", "PUT"] as HTTPMethod[],
-  allowedHeaders: "*",
-  exposedHeaders: "*",
+  origin: '*',
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'] as HTTPMethod[],
+  allowedHeaders: '*',
+  exposedHeaders: '*',
   maxAge: 5,
 };
-
 const swaggerConfig = {
   documenation: {
     info: {
-      title: "API Documentation",
-      version: "0.0.0",
+      title: 'Xander API Documentation',
+      version: '0.0.0',
     },
   },
-  path: "/",
+
+  path: '/',
 };
 
-const app = new Elysia({ prefix: "/api" })
-  .use(
-    jwt({
-      name: "jwt",
-      secret: process.env.SECRET || "SECRET",
-    }),
-  )
-  .use(cors(corsConfig))
-  .use(swagger(swaggerConfig))
+export function useAPI(prefix?: string) {
+  const app = new Elysia({prefix: prefix || ''})
+    .use(
+      jwt({
+        name: 'jwt',
+        secret: process.env.SECRET || 'SECRET',
+      })
+    ) // Auth routes
+    .use(cors(corsConfig))
+    .use(swagger(swaggerConfig))
+    .resolve(connectToDatabase)
+    .derive(validate_auth)
+    .use(auth_routes) //auth routes
+    .use(studio_routes)
+    .use(profile_routes);
 
-  .use(studio_routes);
+  return app;
+}
+
+const app = useAPI('/api');
 
 // Expose methods
 export const GET = withAxiom(app.handle);

@@ -12,6 +12,7 @@ export async function connectToDatabase() {
     console.log('Already connected to database');
     return {db, usersCollection, blogsCollection, profileCollection};
   }
+  //console.log('MONGO_URI', typeof process.env.MONGO_URI);
   console.log('Connecting to database');
   const client = new MongoClient(MONGO_URI, {
     tls: true,

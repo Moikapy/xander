@@ -10,9 +10,7 @@ import {auth_routes} from './auth';
 import studio_routes from './studio';
 import profile_routes from './profile';
 import {validate_auth} from './auth/validate_auth';
-import { connectToDatabase } from '../middleware';
-
-
+import {connectToDatabase} from '../middleware';
 
 const corsConfig = {
   origin: '*',
@@ -32,26 +30,41 @@ const swaggerConfig = {
   path: '/',
 };
 
-export function useAPI(prefix?: string) {
-  const app = new Elysia({prefix: prefix || ''})
-    .use(
-      jwt({
-        name: 'jwt',
-        secret: process.env.SECRET || 'SECRET',
-      })
-    ) // Auth routes
-    .use(cors(corsConfig))
-    .use(swagger(swaggerConfig))
-    .resolve(connectToDatabase)
-    .derive(validate_auth)
-    .use(auth_routes) //auth routes
-    .use(studio_routes)
-    .use(profile_routes);
+// export function useAPI(prefix?: string) {
+//   const app = new Elysia({prefix: "/api"})
+//     .use(
+//       jwt({
+//         name: 'jwt',
+//         secret: process.env.SECRET || 'SECRET',
+//       })
+//     ) // Auth routes
+//     .use(cors(corsConfig))
+//     .use(swagger(swaggerConfig))
+//     .resolve(connectToDatabase)
+//     .derive(validate_auth)
+//     .use(auth_routes) //auth routes
+//     .use(studio_routes)
+//     .use(profile_routes);
 
-  return app;
-}
+//   return app;
+// }
 
-const app = useAPI('/api');
+// const app = useAPI('/api');
+
+const app = new Elysia({prefix: '/api'})
+  .use(
+    jwt({
+      name: 'jwt',
+      secret: process.env.SECRET || 'SECRET',
+    })
+  ) // Auth routes
+  .use(cors(corsConfig))
+  .use(swagger(swaggerConfig))
+  .resolve(connectToDatabase)
+  .derive(validate_auth)
+  .use(auth_routes) //auth routes
+  .use(studio_routes)
+  .use(profile_routes);
 
 // Expose methods
 export const GET = withAxiom(app.handle);

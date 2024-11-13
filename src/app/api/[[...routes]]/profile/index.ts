@@ -72,7 +72,7 @@ const profile_routes = new Elysia({
     async ({jwt, db, usersCollection, profileCollection, user, set}) => {
       try {
         const _user = await usersCollection.findOne({email: user.email});
-        
+
         if (_user) {
           const profile = await profileCollection.findOne({
             user_id: _user._id,
@@ -121,7 +121,7 @@ const profile_routes = new Elysia({
   .post(
     '/profile/edit',
     async ({usersCollection, profileCollection, body, user, set}) => {
-     // console.log('user', user);
+      // console.log('user', user);
       try {
         const _user = await usersCollection.findOne({
           email: user.email,
@@ -162,16 +162,16 @@ const profile_routes = new Elysia({
 
               await s3.send(new PutObjectCommand(s3Params));
               // Read the object.
-              const {Body} = await s3.send(new GetObjectCommand(s3Params));
-              //console.log('Body', Body?.url);
-              if (!Body) {
+              const s3Response = await s3.send(new GetObjectCommand(s3Params));
+              if (s3Response.Body) {
+                const url = await s3Response.Body.transformToString();
+                avatarUrl = url;
+              } else {
                 return {
                   status: 500,
-
                   message: 'Failed to upload avatar',
                 };
               }
-              avatarUrl = await Body?.url; //uploadResult.Location;
 
               // Delete the previous avatar from DigitalOcean Spaces if it exists
               if (currentAvatarUrl) {
@@ -239,13 +239,14 @@ const profile_routes = new Elysia({
           message: 'Internal server error' + error,
         };
       }
-    },{
-      body:t.Object({
-        name:t.String(),
-        handle:t.String(),
-        bio:t.String(),
-        avatar:t.File(),
-      })
+    },
+    {
+      body: t.Object({
+        name: t.String(),
+        handle: t.String(),
+        bio: t.String(),
+        avatar: t.File(),
+      }),
     }
   );
 

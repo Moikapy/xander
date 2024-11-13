@@ -8,7 +8,7 @@ export async function createAgent({
   llm,
   systemMessage,
 }: {
-  llm: ChatAnthropic;
+  llm: any;
   systemMessage: string;
 }): Promise<Runnable> {
   let prompt = ChatPromptTemplate.fromMessages([

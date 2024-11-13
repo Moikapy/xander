@@ -2,7 +2,6 @@
 import 'dotenv/config';
 import {ChatAnthropic} from '@langchain/anthropic';
 // Import everything
-import * as webllm from '@mlc-ai/web-llm';
 import {ChatWebLLM} from '@langchain/community/chat_models/webllm';
 
 export async function llm({
@@ -15,7 +14,9 @@ export async function llm({
   temperature: number;
   max_tokens: number;
   provider?: string;
-}): Promise<ChatAnthropic | ChatWebLLM> {
+
+
+}) {
   const anthropic = new ChatAnthropic({
     model,
     temperature,

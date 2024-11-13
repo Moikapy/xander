@@ -25,7 +25,10 @@ const LoginPage = () => {
         login({
           email,
           password,
-        }).then((res) => {
+        }).then((res:{
+          status: number;
+          message: string;
+        }) => {
           console.log('res', res);
           //res.status === 200 && router.push('/portal');
         });

@@ -16,4 +16,6 @@ RUN bun install
 COPY . .
 
 # Step 7: Define the command to run your app
-CMD bun run build && bun run start
+
+
+CMD bun --bun run build && bun --bun run start

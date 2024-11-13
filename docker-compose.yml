@@ -2,6 +2,7 @@
 version: "3.8"
 services:
   app:
+    working_dir: /app
     restart: unless-stopped
     build:
       context: .
@@ -12,6 +13,7 @@ services:
       - mongo
     volumes:
       - .:/app
+      - /app/node_modules
   mongo:
     restart: unless-stopped
     image: mongo

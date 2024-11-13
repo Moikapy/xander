@@ -1,4 +1,7 @@
-export const validate_auth = async ({ headers, jwt }) => {
+export const validate_auth = async ({ headers, jwt }:{
+  headers: any;
+  jwt: any;
+}) => {
   // 1. Extract the 'Authorization' header from the incoming request
   const auth = headers["authorization"];
   //console.log('auth', auth.split(' ')[1]);

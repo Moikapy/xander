@@ -23,7 +23,7 @@ const ProfileEditPage = () => {
     auth().then((isAuth: boolean) => {
       if (!isAuth) {
         router.push('/login');
-      } 
+      }
     });
   }, []);
   async function initProfile() {
@@ -43,11 +43,10 @@ const ProfileEditPage = () => {
 
   return !loading ? (
     <ProfileEdit
-      name={profile?.name}
-      user_name={profile?.user_name}
-      handle={profile?.handle}
-      bio={profile?.bio}
-      avatar={profile?.avatar}
+      name={profile?.name || ''}
+      handle={profile?.handle || ''}
+      bio={profile?.bio || ''}
+      avatar={profile?.avatar || ''}
     />
   ) : (
     <Loading />

@@ -22,7 +22,7 @@ const ProfileEdit = ({
   const [loading, setLoading] = useState(false);
   const {editProfile} = useProfile();
   // Handle avatar file upload
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
       setFile(file);

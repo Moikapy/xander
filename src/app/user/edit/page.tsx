@@ -24,6 +24,7 @@ const ProfileEditPage = () => {
       if (!isAuth) {
         router.push('/login');
       }
+    
     });
   }, []);
   async function initProfile() {

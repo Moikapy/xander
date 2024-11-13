@@ -11,8 +11,10 @@ const PortalPage = () => {
   const {auth}: any = useAuth();
   useEffect(() => {
     auth().then((isAuth: boolean) => {
+      console.log(isAuth);
       if (!isAuth) {
-        router.push('/portal');
+        console.log(isAuth)
+        router.push('/login');
       } else {
         setLoading(false);
       }

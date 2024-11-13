@@ -8,17 +8,23 @@ export default function useAuth() {
   return {
     error,
     auth: async () => {
-      const response: any = await api.auth.get({
-        headers: {
-          authorization: `Bearer ${localStorage.getItem('authToken')}`,
-        },
-      });
-      if (response.status === 200) {
-        console.log('Authorized', response);
-        return true;
+      try {
+        const response: any = await api.auth.get({
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+        console.log('response', response);
+        if (response.status === 200) {
+          console.log('Authorized', response);
+          return true;
+        }
+        setError(response?.message || 'Unauthorized');
+        return false;
+      } catch (error) {
+        setError('Unauthorized');
+        return false;
       }
-      setError(response?.message || 'Unauthorized');
-      return false;
     },
     login: async ({email, password}: {email: string; password: string}) => {
       try {

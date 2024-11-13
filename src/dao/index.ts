@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import { MongoClient } from "mongodb";
 
 export default function DAO() {
   // MongoDB connection setup
-  const MONGO_URI = "mongodb://mongo:27017";
+  const MONGO_URI = process.env.MONGO_URI || "";
   const DATABASE_NAME = process.env.DATABASE_NAME || "xander_app";
   let db: any = null;
   let usersCollection = db.collection("users") || null;

@@ -3,26 +3,22 @@ version: "3.8"
 services:
   app:
     working_dir: /app
+    network_mode: host
     restart: unless-stopped
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    depends_on:
-      - mongo
     volumes:
       - .:/app
       - /app/node_modules
-  mongo:
-    restart: unless-stopped
-    image: mongo
-    ports:
-      - "27017:27017"
     environment:
-      MONGO_INITDB_DATABASE: studio_moika_dev
-    volumes:
-      - ./mongo_data:/data/db
+      - NODE_ENV=production
+      - MONGO_URI=${MONGO_URI}
+      - JWT_SECRET=${JWT_SECRET}
   nginx:
     restart: unless-stopped
     build:

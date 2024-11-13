@@ -8,18 +8,17 @@ export default function useAuth() {
   return {
     error,
     auth: async () => {
-      const response:any = await api.auth.get({
+      const response: any = await api.auth.get({
         headers: {
           authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
       });
       if (response.status === 200) {
         console.log('Authorized', response);
-        return true
-      } else {
-        setError(response?.message || 'Unauthorized');
-        return false
+        return true;
       }
+      setError(response?.message || 'Unauthorized');
+      return false;
     },
     login: async ({email, password}: {email: string; password: string}) => {
       try {
@@ -34,7 +33,7 @@ export default function useAuth() {
           localStorage.setItem('authToken', response.data.body.token);
           return response;
         } else {
-          setError(response.message || "Login failed");
+          setError(response.message || 'Login failed');
           throw new Error(response.message || 'Login failed');
           return response;
         }

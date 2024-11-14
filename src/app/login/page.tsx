@@ -9,31 +9,31 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(true);
   const {login, auth, error}: any = useAuth();
   useEffect(() => {
+    console.log('checking authentication...');
     auth().then((isAuth: boolean) => {
       if (isAuth) {
-        router.push('/portal');
+        router.push('/');
       } else {
         setLoading(false);
       }
     });
-  }, []);
+  }, [auth]);
 
   return !loading ? (
-    <Login
-      error={error}
-      onSubmit={({email, password}) => {
-        login({
-          email,
-          password,
-        }).then((res:{
-          status: number;
-          message: string;
-        }) => {
-          console.log('res', res);
-          //res.status === 200 && router.push('/portal');
-        });
-      }}
-    />
+    <div className='flex flex-col justify-center items-center h-full'>
+      <Login
+        error={error}
+        onSubmit={({email, password}) => {
+          login({
+            email,
+            password,
+          }).then((res: {status: number; message: string}) => {
+            console.log('res', res);
+            //res.status === 200 && router.push('/portal');
+          });
+        }}
+      />
+    </div>
   ) : (
     <Loading />
   );

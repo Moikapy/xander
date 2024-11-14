@@ -12,7 +12,7 @@ const Login = ({
   const [password, setPassword] = useState('');
 
   return (
-    <div className='flex justify-center items-center min-h-screen bg-base-100 font-mono'>
+    <div className='bg-base-100 font-mono'>
       <div className='card w-96 bg-white shadow-xl'>
         <div className='card-body'>
           <h2 className='text-2xl font-bold mb-4 text-center'>Login</h2>

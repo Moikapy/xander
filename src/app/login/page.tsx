@@ -2,7 +2,7 @@
 import React, {use, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import Login from '@/views/login';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 import useAuth from '@/hooks/useAuth';
 const LoginPage = () => {
   const router = useRouter();

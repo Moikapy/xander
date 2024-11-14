@@ -5,7 +5,7 @@ import useAuth from '@/hooks/useAuth';
 import useInvoke from '@/hooks/useInvoke';
 import {useRouter} from 'next/navigation';
 import {ChatHeader, ChatMessages, UserPromptInput} from '@/components/Chat';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 
 export default function ChatPage() {
   const router = useRouter();

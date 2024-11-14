@@ -101,7 +101,7 @@ export function ChatMessages({
   messagesEndRef: any;
 }) {
   return (
-    <div className='flex-1 overflow-y-auto p-4 space-y-4 border-b border-black nodeag'>
+    <div className='flex-1 overflow-y-auto p-4 space-y-4 border-b border-black nodeag h-full'>
       {messages.map((message: {role: string; content: any[]}, index) => (
         <div
           key={index}

@@ -4,7 +4,7 @@ import useAuth from '@/hooks/useAuth';
 import ProfileEdit from '@/views/profile_edit';
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 
 const ProfileEditPage = () => {
   const router = useRouter();

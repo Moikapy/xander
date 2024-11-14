@@ -5,9 +5,9 @@ import ChatWidget from '@/components/ChatWidget';
 //import '@/src/styles/globals.css';
 export default function Layout({children}:{children:React.ReactNode}) {
   return (
-    <div className="layout h-screen flex flex-col font-mono">
+    <div className="layout h-dvh flex flex-col font-mono">
       <Navbar />
-      <div className="flex flex-col h-dvh"> {children}</div>
+      <div className="flex flex-col h-full"> {children}</div>
 
       {/* Footer */}
       {/* <ChatWidget /> */}

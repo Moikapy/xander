@@ -20,7 +20,7 @@ const Navbar = () => {
     </button>
   </div>
   <div className="flex-1">
-    <Link href="/" className="btn btn-ghost text-xl">Moikas</Link>
+    <Link href="/" className="btn btn-ghost text-xl">GENUS.SH</Link>
   </div>
   <div className="flex-none">
     <button className="btn btn-square btn-ghost">

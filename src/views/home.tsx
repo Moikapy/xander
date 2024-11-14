@@ -5,11 +5,11 @@ const Home = () => {
   return (
     <section className='text-mono flex flex-col justify-center items-center justify-self-center self-center h-full'>
       <div className='container flex flex-col items-center mx-auto text-center'>
-        <h1 className='text-xl font-bold mb-4'>Moikas</h1>
+        <h1 className='text-xl font-bold mb-4'>GENUS.SH</h1>
         <p className='text-sm mb-6'>Open-Source AI Studio.</p>
 
         <div className='flex flex-col space-y-4'>
-          <Link href='/portal' className='btn btn-wide bg-black'>
+          <Link href='/login' className='btn btn-wide bg-black'>
             Enter
           </Link>
         </div>

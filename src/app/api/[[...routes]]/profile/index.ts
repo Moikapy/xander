@@ -208,6 +208,7 @@ const profile_routes = new Elysia({
                 bio,
                 avatar: `${avatarUrl}?v=${new Date().getTime()}`,
                 user_id: _user._id,
+                updated_at: new Date(),
               },
             },
             {upsert: true}

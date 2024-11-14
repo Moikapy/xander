@@ -43,3 +43,9 @@ export async function llm({
   });
   return webllm;
 }
+/**
+ * 
+ * You are a tech analyst, on a scale of 1-10, (1 = bad, 10 = best) rate this post, only provide a numerical answer. "the path to AGI, for the first time in history, is crystal clear. all we need to do is have patience"
+ * 
+ * 
+ */

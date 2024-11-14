@@ -4,7 +4,7 @@ import useAuth from '@/hooks/useAuth';
 import ProfilePage from '@/views/profile';
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 
 const Profile = () => {
   const router = useRouter();

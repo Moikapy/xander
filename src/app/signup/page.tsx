@@ -5,7 +5,7 @@ import {api} from '@/lib/api';
 import {useRouter} from 'next/navigation';
 import Signup from '@/views/signup';
 import useAuth from '@/hooks/useAuth';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 const SignupPage = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ const SignupPage = () => {
   useEffect(() => {
     auth().then((isAuth: boolean) => {
       if (isAuth) {
-        router.push('/portal');
+        router.push('/');
       } else {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ const SignupPage = () => {
       });
 
       if (response.status === 201 || response.status === 200) {
-        router.push('/user/edit');
+        router.push('/settings');
       } else {
         setError(response.data.body.message || 'Signup failed');
       }

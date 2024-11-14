@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
-import Loading from '@/components/Loading';
+import Loading from '@/views/Loading';
 import useAuth from '@/hooks/useAuth';
 const PortalPage = () => {
   const router = useRouter();

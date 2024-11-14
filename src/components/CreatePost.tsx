@@ -18,7 +18,7 @@ const CreatePost = ({ onPostSubmit }) => {
       <form onSubmit={handleSubmit}>
         <textarea
           className="w-full p-2 border rounded mb-4 resize-none"
-          placeholder="What's happening?"
+          placeholder="What are you creating?"
           rows={3}
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}

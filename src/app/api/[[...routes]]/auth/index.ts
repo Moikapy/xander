@@ -41,7 +41,7 @@ export const auth_routes = new Elysia()
           timeCost: 3, // the number of iterations
           algorithm: 'argon2id',
         });
-        await usersCollection.insertOne({email, password: hashedPassword});
+        await usersCollection.insertOne({email, password: hashedPassword, created_at: new Date()});
         return {
           status: 201,
           body: {message: 'User registered successfully'},

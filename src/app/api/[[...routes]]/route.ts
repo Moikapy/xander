@@ -11,6 +11,7 @@ import studio_routes from './studio';
 import profile_routes from './profile';
 import {validate_auth} from './auth/validate_auth';
 import {connectToDatabase} from '../middleware';
+import jot_routes from './jot';
 
 const corsConfig = {
   origin: '*',
@@ -64,7 +65,8 @@ const app = new Elysia({prefix: '/api'})
   .derive(validate_auth)
   .use(auth_routes) //auth routes
   .use(studio_routes)
-  .use(profile_routes);
+  .use(profile_routes)
+  .use(jot_routes);
 
 // Expose methods
 export const GET = withAxiom(app.handle);

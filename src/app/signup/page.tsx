@@ -12,6 +12,7 @@ const SignupPage = () => {
   const [loading, setLoading] = useState(true);
   const {auth}: any = useAuth();
   useEffect(() => {
+    console.log('checking authentication...');
     auth().then((isAuth: boolean) => {
       if (isAuth) {
         router.push('/');
@@ -19,7 +20,7 @@ const SignupPage = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [auth]);
   const handleSignup = async ({
     email,
     password,
@@ -45,20 +46,22 @@ const SignupPage = () => {
     }
   };
   return !loading ? (
-    <Signup
-      handleSignup={({
-        email,
-        password,
-      }: {
-        email: string;
-        password: string;
-      }): void => {
-        handleSignup({email, password}).then(() => {
-          console.log('Signup successful');
-        });
-      }}
-      error={error}
-    />
+    <div className='flex flex-col justify-center items-center h-full'>
+      <Signup
+        handleSignup={({
+          email,
+          password,
+        }: {
+          email: string;
+          password: string;
+        }): void => {
+          handleSignup({email, password}).then(() => {
+            console.log('Signup successful');
+          });
+        }}
+        error={error}
+      />
+    </div>
   ) : (
     <Loading />
   );

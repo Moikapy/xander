@@ -36,7 +36,7 @@ const Profile = () => {
     //console.log('profile', _profile);
 
     if (!_profile) {
-      router.push('/user/edit');
+      router.push('/settings');
       return;
     }
     setProfile(_profile);
@@ -46,12 +46,14 @@ const Profile = () => {
     initProfile();
   }, []);
   return !loading ? (
-    <ProfilePage
-      name={profile?.name}
-      handle={profile?.handle}
-      bio={profile?.bio}
-      avatar={profile?.avatar}
-    />
+    <div className='m-3'>
+      <ProfilePage
+        name={profile?.name}
+        handle={profile?.handle}
+        bio={profile?.bio}
+        avatar={profile?.avatar}
+      />
+    </div>
   ) : (
     <Loading />
   );

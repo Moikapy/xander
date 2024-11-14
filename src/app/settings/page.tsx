@@ -31,10 +31,10 @@ const ProfileEditPage = () => {
     const _profile = await getProfile();
     //console.log('profile', _profile);
 
-    if (!_profile) {
-      router.push('/user/edit');
-      return;
-    }
+    // if (!_profile) {
+    //   router.push('/user/edit');
+    //   return;
+    // }
     setProfile(_profile);
     setLoading(false);
   }

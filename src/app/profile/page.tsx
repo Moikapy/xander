@@ -5,12 +5,14 @@ import ProfilePage from '@/views/profile';
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import Loading from '@/views/Loading';
+import {useAuthContext} from '@/providers/AuthProvider';
 
 const Profile = () => {
   const router = useRouter();
-  const {auth}: any = useAuth();
+  const {isAuthenticated, loading} = useAuthContext();
+
   const {getProfile} = useProfile();
-  const [loading, setLoading] = useState(true);
+
   const [profile, setProfile] = useState<{
     name: string | null;
     user_name: string | null;
@@ -25,26 +27,20 @@ const Profile = () => {
     avatar: null,
   });
   useEffect(() => {
-    auth().then((isAuth: boolean) => {
-      if (!isAuth) {
-        router.push('/login');
-      }
-    });
-  }, []);
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+    initProfile();
+  }, [isAuthenticated, loading, router]);
   async function initProfile() {
     const _profile = await getProfile();
     //console.log('profile', _profile);
 
     if (!_profile) {
       router.push('/settings');
-      return;
     }
     setProfile(_profile);
-    setLoading(false);
   }
-  useEffect(() => {
-    initProfile();
-  }, []);
   return !loading ? (
     <div className='m-3'>
       <ProfilePage

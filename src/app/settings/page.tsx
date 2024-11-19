@@ -5,12 +5,13 @@ import ProfileEdit from '@/views/profile_edit';
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import Loading from '@/views/Loading';
+import {useAuthContext} from '@/providers/AuthProvider';
 
 const ProfileEditPage = () => {
   const router = useRouter();
-  const {auth}: any = useAuth();
+  const {isAuthenticated, loading} = useAuthContext();
   const {getProfile} = useProfile();
-  const [loading, setLoading] = useState(true);
+
   const [profile, setProfile] = useState<{
     name: string;
     user_name: string;
@@ -20,13 +21,11 @@ const ProfileEditPage = () => {
   } | null>(null);
 
   useEffect(() => {
-    auth().then((isAuth: boolean) => {
-      if (!isAuth) {
-        router.push('/login');
-      }
-    
-    });
-  }, []);
+    if (!isAuthenticated) {
+      router.push('/login');
+    }
+    initProfile();
+  }, [isAuthenticated, loading, router]);
   async function initProfile() {
     const _profile = await getProfile();
     //console.log('profile', _profile);
@@ -36,11 +35,7 @@ const ProfileEditPage = () => {
     //   return;
     // }
     setProfile(_profile);
-    setLoading(false);
   }
-  useEffect(() => {
-    initProfile();
-  }, []);
 
   return !loading ? (
     <ProfileEdit

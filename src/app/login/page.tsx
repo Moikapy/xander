@@ -3,21 +3,17 @@ import React, {use, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import Login from '@/views/login';
 import Loading from '@/views/Loading';
-import useAuth from '@/hooks/useAuth';
+import {useAuthContext} from '@/providers/AuthProvider';
+
 const LoginPage = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const {login, auth, error}: any = useAuth();
+   const {isAuthenticated, loading, error} = useAuthContext();
   useEffect(() => {
     console.log('checking authentication...');
-    auth().then((isAuth: boolean) => {
-      if (isAuth) {
-        router.push('/');
-      } else {
-        setLoading(false);
-      }
-    });
-  }, [auth]);
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, loading, router]);
 
   return !loading ? (
     <div className='flex flex-col justify-center items-center h-full'>

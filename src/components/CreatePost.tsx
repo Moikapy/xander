@@ -14,7 +14,7 @@ const CreatePost = ({ onPostSubmit }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg mb-6">
+    <div className="p-4 rounded-lg mb-6">
       <form onSubmit={handleSubmit}>
         <textarea
           className="w-full p-2 border rounded mb-4 resize-none"

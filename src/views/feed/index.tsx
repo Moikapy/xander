@@ -5,6 +5,7 @@ import {IoChatbox} from 'react-icons/io5';
 import CreatePost from '@/components/CreatePost';
 import Link from 'next/link';
 import ChatView from '../chat';
+import SideBar from '@/components/SideBar';
 
 const Feed = ({initialposts, topics}) => {
   const [posts, setPosts] = useState(initialposts);
@@ -68,43 +69,11 @@ const Feed = ({initialposts, topics}) => {
   }, []);
 
   return (
-    <div className='flex flex-col sm:flex-row min-h-screen bg-gray-100'>
-      {/* Sidebar - Positioned at the bottom on small screens */}
-      <aside
-        className={`${
-          showBottomNav ? 'flex' : 'hidden'
-        } fixed bottom-0 left-0 w-full bg-white border-t sm:relative sm:w-20 xl:w-64 sm:border-r sm:border-t-0 sm:flex sm:flex-col sm:h-auto sm:space-y-4 p-2 sm:p-4 z-10`}>
-        <nav className='flex justify-around sm:justify-start sm:flex-col space-y-0 sm:space-y-4'>
-          <button
-            onClick={() => setView('feed')}
-            className='flex items-center justify-center sm:justify-start p-3 text-lg font-semibold text-gray-700 rounded hover:bg-gray-200'>
-            <FaHome className='w-6 h-6' />
-            <span className='ml-3 hidden xl:inline'>Home</span>
-          </button>
-          <button
-            onClick={() => setView('chat')}
-            className='flex items-center justify-center sm:justify-start p-3 text-lg font-semibold text-gray-700 rounded hover:bg-gray-200'>
-            <IoChatbox className='w-6 h-6' />
-            <span className='ml-3 hidden xl:inline'>AI</span>
-          </button>
-          <Link
-            href={'/profile'}
-            className='flex items-center justify-center sm:justify-start p-3 text-lg font-semibold text-gray-700 rounded hover:bg-gray-200'>
-            <FaUser className='w-6 h-6' />
-            <span className='ml-3 hidden xl:inline'>Profile</span>
-          </Link>
-          <Link
-            href='/settings'
-            className='flex items-center justify-center sm:justify-start p-3 text-lg font-semibold text-gray-700 rounded hover:bg-gray-200'>
-            <FaCog className='w-6 h-6' />
-            <span className='ml-3 hidden xl:inline'>Settings</span>
-          </Link>
-        </nav>
-      </aside>
+    <div className='flex flex-col sm:flex-row h-full'>
       {view === 'feed' ? (
         <>
           {/* Main Feed */}
-          <main className='flex-1 bg-white p-4 sm:p-6'>
+          <main className='flex-1 p-4 sm:p-6'>
             <div className='max-w-xl mx-auto'>
               <div ref={createPostRef}>
                 <CreatePost onPostSubmit={handleNewPost} />
@@ -142,7 +111,7 @@ const Feed = ({initialposts, topics}) => {
           </main>
 
           {/* Right Sidebar - Hidden on smaller screens */}
-          <aside className='hidden md:block md:w-96 bg-gray-50 p-4'>
+          <aside className='hidden md:block md:w-96 bg-base-50 p-4'>
             <h3 className='text-lg font-bold mb-4'>Trends</h3>
             <div className='space-y-4'>
               {trendingTopics.map((topic, index) => (
@@ -191,3 +160,5 @@ const Feed = ({initialposts, topics}) => {
 };
 
 export default Feed;
+
+

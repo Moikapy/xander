@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import React, {useState, useEffect, useRef} from 'react';
-import useAuth from '@/hooks/useAuth';
-import useInvoke from '@/hooks/useInvoke';
-import {useRouter} from 'next/navigation';
-import {ChatHeader, ChatMessages, UserPromptInput} from '@/components/Chat';
-import Loading from '@/views/Loading';
+import React, { useState, useEffect, useRef } from "react";
+import useAuth from "@/hooks/useAuth";
+import useInvoke from "@/hooks/useInvoke";
+import { useRouter } from "next/navigation";
+import { ChatHeader, ChatMessages, UserPromptInput } from "@/components/Chat";
+import Loading from "@/views/Loading";
 
 export default function ChatPage() {
   const router = useRouter();
@@ -18,11 +18,11 @@ export default function ChatPage() {
   //const isResizing = useRef(false);
   const messagesEndRef = useRef(null);
   // const [showExtraFeatures, setShowExtraFeatures] = useState(false); // Popup state
-  const {auth} = useAuth();
-  const {invoke_graph} = useInvoke({
-    model: 'claude-3-5-haiku-20241022',
+  const { auth } = useAuth();
+  const { invoke_graph } = useInvoke({
+    model: "claude-3-5-haiku-20241022",
     max_tokens: 4096,
-    system_message: 'The Supreme Intellegence',
+    system_message: "The Supreme Intellegence",
     temperature: temperature,
   });
   /*
@@ -36,14 +36,14 @@ export default function ChatPage() {
   useEffect(() => {
     auth().then((isAuth: boolean) => {
       if (!isAuth) {
-        router.push('/');
+        router.push("/");
       } else {
         setLoading(false);
       }
     });
   }, []);
   useEffect(() => {
-    console.log('loaded');
+    console.log("loaded");
     //scrollToBottom();
   }, [messages]);
 
@@ -54,22 +54,22 @@ export default function ChatPage() {
     input: string;
     onGeneratingResponse: Function; //
   }) => {
-    if (input.trim() === '') return;
-    const userMessage = {role: 'user', content: input};
+    if (input.trim() === "") return;
+    const userMessage = { role: "user", content: input };
     setMessages((prev) => [...prev, userMessage]);
-    if (typeof onGeneratingResponse === 'function') {
+    if (typeof onGeneratingResponse === "function") {
       onGeneratingResponse();
     }
     setIsLoading(true);
     try {
-      const {message, metadata} = await invoke_graph(input);
-      const aiMessage = {role: 'assistant', content: message};
+      const { message, metadata } = await invoke_graph(input);
+      const aiMessage = { role: "assistant", content: message };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error: any) {
-      console.error('Error sending message:', error?.message);
+      console.error("Error sending message:", error?.message);
       setMessages((prev) => [
         ...prev,
-        {role: 'system', content: 'Error: Unable to get response'},
+        { role: "system", content: "Error: Unable to get response" },
       ]);
     } finally {
       setIsLoading(false);
@@ -77,10 +77,7 @@ export default function ChatPage() {
   };
 
   return !loading ? (
-    <div className='bg-white rounded-lg shadow-lg flex flex-col h-full'>
-      {/* Header */}
-      <ChatHeader header='' />
-
+    <div className="bg-white rounded-lg shadow-lg flex flex-col h-full">
       {/* Chat Content */}
       <ChatMessages messages={messages} messagesEndRef={messagesEndRef} />
 

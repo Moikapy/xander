@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {api} from '@/lib/api';
+import { useState } from "react";
+import { api } from "@/lib/api";
 
 export default function useAuth() {
   const [error, setError] = useState<string | null>(null);
@@ -8,7 +8,7 @@ export default function useAuth() {
     try {
       const response: any = await api.auth.get({
         headers: {
-          authorization: `Bearer ${localStorage.getItem('authToken')}`,
+          authorization: `Bearer ${localStorage.getItem("authToken")}`,
         },
       });
 
@@ -16,15 +16,21 @@ export default function useAuth() {
         return true;
       }
 
-      setError(response?.message || 'Unauthorized');
+      setError(response?.message || "Unauthorized");
       return false;
     } catch (error: any) {
-      setError('Unauthorized');
+      setError("Unauthorized");
       return false;
     }
   };
 
-  const login = async (email: string, password: string): Promise<any> => {
+  const login = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }): Promise<any> => {
     try {
       const response: any = await api.login.post({
         email,
@@ -32,20 +38,20 @@ export default function useAuth() {
       });
 
       if (response.status === 200 && response.data.body.token) {
-        localStorage.setItem('authToken', response.data.body.token);
+        localStorage.setItem("authToken", response.data.body.token);
         return response;
       } else {
-        setError(response.message || 'Login failed');
-        throw new Error(response.message || 'Login failed');
+        setError(response.message || "Login failed");
+        throw new Error(response.message || "Login failed");
       }
     } catch (err: any) {
-      setError('An error occurred during login');
+      setError("An error occurred during login");
       return {
         status: 500,
-        message: 'An error occurred during login: ' + err.message,
+        message: "An error occurred during login: " + err.message,
       };
     }
   };
 
-  return {error, auth, login};
+  return { error, auth, login };
 }

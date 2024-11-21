@@ -1,15 +1,15 @@
-import {Elysia, t} from 'elysia';
-import handleFileSpaces from '@/utilities/handle_file_spaces';
-import {connectToDatabase} from '../../middleware';
+import { Elysia, t } from "elysia";
+import handleFileSpaces from "@/utilities/handle_file_spaces";
+import { connectToDatabase } from "../../middleware";
 // DAO
 
-import {validate_auth} from '../auth/validate_auth';
-import jwt from '@elysiajs/jwt';
+import { validate_auth } from "../auth/validate_auth";
+import jwt from "@elysiajs/jwt";
 import {
   PutObjectCommand,
   GetObjectCommand,
   DeleteObjectRequest,
-} from '@aws-sdk/client-s3';
+} from "@aws-sdk/client-s3";
 const profile_routes = new Elysia({
   serve: {
     maxRequestBodySize: 1024 * 1024 * 8,
@@ -17,17 +17,54 @@ const profile_routes = new Elysia({
 })
   .use(
     jwt({
-      name: 'jwt',
-      secret: process.env.SECRET || 'SECRET',
+      name: "jwt",
+      secret: process.env.SECRET || "SECRET",
     })
   )
   .resolve(connectToDatabase)
+  // get all profiles
+  .get("/profiles", async ({ profileCollection, set }) => {
+    try {
+      const profiles = await profileCollection.find().toArray();
+      if (profiles) {
+        set.status = 200;
+        return {
+          status: 200,
+
+          message: "Profiles found",
+          profiles: profiles.map((profile) => {
+            return {
+              name: profile.name,
+              handle: profile.handle,
+              bio: profile.bio,
+              avatar:
+                "https://xander-files.nyc3.cdn.digitaloceanspaces.com" +
+                profile.avatar,
+            };
+          }),
+        };
+      }
+      set.status = 404;
+      return {
+        status: 404,
+
+        message: "Profiles not found",
+      };
+    } catch (error) {
+      set.status = 500;
+      return {
+        status: 500,
+
+        message: "Internal server error",
+      };
+    }
+  })
 
   .get(
-    '/profile/:handle',
-    async ({params, usersCollection, profileCollection}) => {
-      const {handle} = params;
-      console.log('handle', handle);
+    "/profile/:handle",
+    async ({ params, usersCollection, profileCollection }) => {
+      const { handle } = params;
+      console.log("handle", handle);
       const profile = await profileCollection.findOne({
         handle,
       });
@@ -37,7 +74,7 @@ const profile_routes = new Elysia({
           return {
             status: 404,
 
-            message: 'Profile not found',
+            message: "Profile not found",
           };
         }
         const user = await usersCollection.findOne({
@@ -46,14 +83,14 @@ const profile_routes = new Elysia({
         return {
           status: 200,
 
-          message: 'User found',
+          message: "User found",
           user: {
             email: user.email,
             name: profile.name,
             handle: profile.handle,
             bio: profile.bio,
             avatar:
-              'https://xander-files.nyc3.cdn.digitaloceanspaces.com' +
+              "https://xander-files.nyc3.cdn.digitaloceanspaces.com" +
               profile.avatar,
           },
         };
@@ -61,41 +98,41 @@ const profile_routes = new Elysia({
       return {
         status: 404,
 
-        message: 'User not found',
+        message: "User not found",
       };
     }
   )
   // Get Profile
   .derive(validate_auth)
   .get(
-    '/profile',
-    async ({jwt, db, usersCollection, profileCollection, user, set}) => {
+    "/profile",
+    async ({ jwt, db, usersCollection, profileCollection, user, set }) => {
       try {
-        const _user = await usersCollection.findOne({email: user.email});
+        const _user = await usersCollection.findOne({ email: user.email });
 
         if (_user) {
           const profile = await profileCollection.findOne({
             user_id: _user._id,
           });
-          console.log('user', profile);
+          console.log("user", profile);
           if (!profile) {
             return {
               status: 404,
 
-              message: 'Profile not found',
+              message: "Profile not found",
             };
           }
           set.status = 200;
           return {
             status: 200,
 
-            message: 'User found',
+            message: "User found",
             email: _user.email,
             name: profile.name,
             handle: profile.handle,
             bio: profile.bio,
             avatar:
-              'https://xander-files.nyc3.cdn.digitaloceanspaces.com' +
+              "https://xander-files.nyc3.cdn.digitaloceanspaces.com" +
               profile.avatar,
           };
         }
@@ -103,14 +140,14 @@ const profile_routes = new Elysia({
         return {
           status: 404,
 
-          message: 'User not found',
+          message: "User not found",
         };
       } catch (error) {
         set.status = 500;
         return {
           status: 500,
 
-          message: 'Internal server error',
+          message: "Internal server error",
         };
       }
     }
@@ -119,16 +156,16 @@ const profile_routes = new Elysia({
   // Edit Profile
 
   .post(
-    '/profile/edit',
-    async ({usersCollection, profileCollection, body, user, set}) => {
+    "/profile/edit",
+    async ({ authCollection, profileCollection, body, user, set }) => {
       // console.log('user', user);
       try {
-        const _user = await usersCollection.findOne({
+        const _user = await authCollection.findOne({
           email: user.email,
         });
 
         if (_user) {
-          const {name, handle, bio, avatar} = body;
+          const { name, handle, bio, avatar } = body;
           let avatarUrl = null;
 
           // Retrieve the current avatar URL from MongoDB
@@ -144,17 +181,17 @@ const profile_routes = new Elysia({
           if (avatar) {
             //console.log('avatar', avatar);
 
-            const {s3, SPACE_NAME} = await handleFileSpaces();
+            const { s3, SPACE_NAME } = await handleFileSpaces();
             const mimeType = avatar.type;
             const avatarBuffer = await avatar.arrayBuffer();
             const fileBuffer = Buffer.from(avatarBuffer);
             const s3Params: any = {
-              Bucket: SPACE_NAME || '',
+              Bucket: SPACE_NAME || "",
               Key: `avatars/0x69420${_user._id}8008`, // Create a unique file path
               Body: fileBuffer, // The binary buffer of the decoded file
               //ContentEncoding: 'base64', // Required to indicate base64 encoding
               ContentType: mimeType, // Update based on file type if necessary
-              ACL: 'public-read',
+              ACL: "public-read",
             };
 
             try {
@@ -169,7 +206,7 @@ const profile_routes = new Elysia({
               } else {
                 return {
                   status: 500,
-                  message: 'Failed to upload avatar',
+                  message: "Failed to upload avatar",
                 };
               }
 
@@ -189,7 +226,7 @@ const profile_routes = new Elysia({
               return {
                 status: 500,
 
-                message: 'Failed to upload avatar',
+                message: "Failed to upload avatar",
               };
             }
           } else {
@@ -200,24 +237,24 @@ const profile_routes = new Elysia({
 
           // Update profile information in MongoDB
           await profileCollection.updateOne(
-            {user_id: _user._id},
+            { user_id: _user._id },
             {
               $set: {
                 name,
                 handle,
                 bio,
                 avatar: `${avatarUrl}?v=${new Date().getTime()}`,
-                user_id: _user._id,
+                auth_id: _user._id,
                 updated_at: new Date(),
               },
             },
-            {upsert: true}
+            { upsert: true }
           );
           set.status = 200;
           return {
             status: 200,
 
-            message: 'Profile updated',
+            message: "Profile updated",
 
             name,
             handle,
@@ -230,14 +267,14 @@ const profile_routes = new Elysia({
         return {
           status: 404,
 
-          message: 'User not found',
+          message: "User not found",
         };
       } catch (error) {
         set.status = 500;
         return {
           status: 500,
 
-          message: 'Internal server error' + error,
+          message: "Internal server error" + error,
         };
       }
     },

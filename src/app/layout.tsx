@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/SideBar";
 import Providers from "@/providers/Providers";
+
 export default function RootLayout({
   children,
 }: {
